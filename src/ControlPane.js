@@ -8,21 +8,46 @@ const ControlPane = (props) => {
   const [focusR, setFocusR] = useState(props.focusR)
   const [focusG, setFocusG] = useState(props.focusG)
   const [focusB, setFocusB] = useState(props.focusB)
+  const [focusH, setFocusH] = useState(props.focusH)
+  const [focusS, setFocusS] = useState(props.focusS)
+  const [focusL, setFocusL] = useState(props.focusL)
 
-  useEffect(
-    () => {
-      setFocusR(props.focusR);
-      setFocusG(props.fucusG);
-      setFocusB(props.fucusB);
-    }
-    , [props.focusR, props.focusG, props.focusB]);
+  // useEffect(
+  //   () => {
+  //     setFocusR(props.focusR);
+  //     setFocusG(props.focusG);
+  //     setFocusB(props.focusB);
+  //     setFocusH(props.focusH);
+  //     setFocusS(props.focusS);
+  //     setFocusL(props.focusL);
+  //   }
+  //   , [props.focusR, props.focusG, props.focusB, props.focusH, props.focusS, props.focusL]);
 
 
-  const handleChange = (event, colorParam) => {
-    setFocusR(props.focusR)
-    setFocusG(props.focusG)
-    setFocusB(props.focusB)
-    props.onChange(event, colorParam)
+  const handleRgbChange = (event, colorParam) => {
+    // switch (colorParam) {
+    //   case 'R': setFocusR(props.focusR); console.log(props.focusR);
+    //     console.log(convert.rgb.hex([props.focusR,props.focusG,props.focusB]))
+    //     break;
+
+    //   case 'G': setFocusG(props.focusG); break;
+    //   case 'B': setFocusB(props.focusB); break;
+    // }
+    // setFocusH(props.focusH);
+    // setFocusS(props.focusS);
+    // setFocusL(props.focusL);
+
+    props.onRgbChange(event, colorParam)
+  }
+
+  const handleHslChange = (event, colorParam) => {
+    // setFocusH(props.focusH)
+    // setFocusS(props.focusS)
+    // setFocusL(props.focusL)
+    // setFocusR(props.focusR)
+    // setFocusG(props.focusG)
+    // setFocusB(props.focusB)
+    props.onHslChange(event, colorParam)
   }
 
   return (
@@ -36,33 +61,57 @@ const ControlPane = (props) => {
           <button onClick={props.handleLabel}>Label</button>
         </div>
       </div>
-      <div className='controlItemWrapper' >
-        <div style={{ backgroundColor: props.focus, width: '50px', margin: '24px 24px 0px 24px' }}>current  </div>
+      <div className='current-color' >
+        <div className='color-sample' style={{ backgroundColor: '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) }}>&nbsp; </div>
+        <div className='hex'>{'#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB])} </div>
       </div>
-      <div>{convert.rgb.hex(props.focusR, props.focusG, props.focusB)} </div>
-      <div>{convert.rgb.hex(focusR, focusG, focusB)} </div>
-      <div>{props.focusR} {props.focusG}, {props.focusB} </div>
-      {props.focusR}
-      <SliderContainer
-        value={props.focusR}
-        onChange={(event) => handleChange(event, 'R')}
-      />
-      {props.focusG}
-      <SliderContainer
-        value={props.focusG}
-        onChange={(event) => handleChange(event, 'G')}
-      />
-      {props.focusB}
-      <SliderContainer
-        value={props.focusB}
-        onChange={(event) => handleChange(event, 'B')}
-      />
-
-      <div style={{ backgroundColor: '#FF0000', width: '50px', margin: '24px 24px 0px 24px' }}>        R    </div>
-      <div style={{ backgroundColor: '#00FF00', width: '50px', margin: '24px 24px 0px 24px' }}>        G      </div>
-      <div style={{ backgroundColor: '#0000FF', width: '50px', margin: '24px 24px 0px 24px' }}>        B      </div>
-      <div style={{ backgroundColor: '#FFFFFF', width: '50px', margin: '24px 24px 0px 24px' }}>        W      </div>
-      <div style={{ backgroundColor: '#000000', color: '#FFFFFF', width: '50px', margin: '24px 24px 0px 24px' }}>        K      </div>
+      <div style={{ padding: '10px' }}>
+        <SliderContainer
+          symbol={'R'}
+          value={props.focusR}
+          max={255}
+          onChange={(event) => handleRgbChange(event, 'R')}
+        />
+        <SliderContainer
+          symbol={'G'}
+          value={props.focusG}
+          max={255}
+          onChange={(event) => handleRgbChange(event, 'G')}
+        />
+        <SliderContainer
+          symbol={'B'}
+          value={props.focusB}
+          max={255}
+          onChange={(event) => handleRgbChange(event, 'B')}
+        />
+      </div>
+      <div style={{ padding: '10px' }}>
+        <SliderContainer
+          symbol={'H'}
+          value={props.focusH}
+          max={360}
+          onChange={(event) => handleHslChange(event, 'H')}
+        />
+        <SliderContainer
+          symbol={'S'}
+          value={props.focusS}
+          max={100}
+          onChange={(event) => handleHslChange(event, 'S')}
+        />
+        <SliderContainer
+          symbol={'L'}
+          value={props.focusL}
+          max={100}
+          onChange={(event) => handleHslChange(event, 'L')}
+        />
+      </div>
+      <div style={{ display: 'flex' }}>
+        <div style={{ backgroundColor: '#FF0000', width: '24px', margin: '4px 4px 4px 4px' }}>        R    </div>
+        <div style={{ backgroundColor: '#00FF00', width: '24px', margin: '4px 4px 4px 4px' }}>        G      </div>
+        <div style={{ backgroundColor: '#0000FF', width: '24px', margin: '4px 4px 4px 4px' }}>        B      </div>
+        <div style={{ backgroundColor: '#FFFFFF', width: '24px', margin: '4px 4px 4px 4px' }}>        W      </div>
+        <div style={{ backgroundColor: '#000000', color: '#FFFFFF', width: '24px', margin: '4px 4px 4px 4px' }}>        K      </div>
+      </div>
     </StyledControlPane>
   )
 }
@@ -77,9 +126,10 @@ const SliderContainer = (props) => {
 
   return (
     <StyledSliderContainer>
-      <input type="range" min="0" max="255" step="1" value={props.value} onChange={handleChange} />
-      <div>
-        {props.value}
+
+      {props.symbol}<input type="range" min="0" step="1" max={props.max} value={props.value} onChange={handleChange} />
+      <div className='value'>
+        {Math.round(props.value)}
       </div>
     </StyledSliderContainer>
   );
@@ -90,31 +140,37 @@ const StyledControlPane = styled.div`
     // display: flex;
     // flex-direction: column;
     position: absolute;
-    top: 30px;
+    top: 50px;
     left: 30px;
     background-color: white;
     border-radius: 12px;
     opacity: 0.8;
-    
+
+    .color-sample{
+      margin: 8px 16px 0px 16px;
+      border: solid 1px #DDDDDD;
+    }
+    .hex{
+      text-align:center;
+    }
+
     .controlItemWrapper{
       top: 8px;
       display: flex;
-      // flex-direction: row;
       text-align: left;
     }
-    .controlIconWrapper{
-      margin-top: 4px;
-      margin-left:4px;
-    }
+
   `;
 
 const StyledSliderContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
-    padding: 5px;
-  
+    margin-bottom: 5px;
+    padding: 0px;
+    .value{
+      width:20px;
+    }
     .label-on{
       font-size:20px;
       color: black;

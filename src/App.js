@@ -9,13 +9,11 @@ import { useSpring, animated } from "@react-spring/three"
 import styled from 'styled-components';
 import ControlPane from './ControlPane'
 
-//Gitにpush
 
-//hslをスライダで指定
 //mapに現在位置を表示
 //hsvを追加
 //座標軸
-//重なってる場合に奥のparticleをクリックしてしまう
+//ホバーしたら大きくなる。大きくならないとクリックできない。
 //色の明るさ調整
 //表示近さ調整
 //平面で選色
@@ -27,10 +25,14 @@ function App() {
 
   const [shape, setShape] = useState('CAKE')
   const [isLabelShown, setIsLabelShown] = useState(false)
-  // const [focus, setFocus] = useState('#FFFFFF')
+  
   const [focusR, setFocusR] = useState(255)
   const [focusG, setFocusG] = useState(255)
   const [focusB, setFocusB] = useState(255)
+  const [focusH, setFocusH] = useState(0)
+  const [focusS, setFocusS] = useState(100)
+  const [focusL, setFocusL] = useState(100)
+
 
   const cameraPosition = [-2, 0, 7]; // カメラの位置
   const particles = [];
@@ -42,12 +44,41 @@ function App() {
   const gRange = 255;
   const bRange = 255;
 
+  const handleRgbChange = (event, colorParam) => {
+    switch (colorParam) {
+      case 'R':
+        setFocusR(event.target.value); break;
+      case 'G':
+        setFocusG(event.target.value); break;
+      case 'B':
+        setFocusB(event.target.value); break;
+    }
+    setFocusH(convert.rgb.hsl([focusR,focusG,focusB])[0]);
+    setFocusS(convert.rgb.hsl([focusR,focusG,focusB])[1]);
+    setFocusL(convert.rgb.hsl([focusR,focusG,focusB])[2]);
+  }
+  const handleHslChange = (event, colorParam) => {
+    switch (colorParam) {
+      case 'H':
+        setFocusH(event.target.value);break;
+      case 'S':
+        setFocusS(event.target.value);break;
+      case 'L':
+        setFocusL(event.target.value);break;
+    }
+    setFocusR(convert.hsl.rgb([focusH,focusS,focusL])[0]);
+    setFocusG(convert.hsl.rgb([focusH,focusS,focusL])[1]);
+    setFocusB(convert.hsl.rgb([focusH,focusS,focusL])[2]);
+  }
+
+
   const handleClick = (r, g, b) => {
-    // const color = "#" + convert.rgb.hex(r, g, b)
-    // setFocus(color)
     setFocusR(r)
     setFocusG(g)
     setFocusB(b)
+    setFocusH(convert.rgb.hsl([r,g,b])[0])
+    setFocusS(convert.rgb.hsl([r,g,b])[1])
+    setFocusL(convert.rgb.hsl([r,g,b])[2])
   }
   const handleLabel = () => {
     setIsLabelShown(isLabelShown ? false : true);
@@ -76,25 +107,19 @@ function App() {
     }
   }
 
-  const handleChange = (event, colorParam) => {
-    switch (colorParam) {
-      case 'R':
-        setFocusR(event.target.value); break;
-      case 'G':
-        setFocusG(event.target.value); break;
-      case 'B':
-        setFocusB(event.target.value); break;
-    }
-  }
 
 
   return (
     <>
 
       <div className="App">
-        {focusR}
-        {focusG}
-        {focusB}
+        {focusR},
+        {focusG},
+        {focusB}<br />
+        {focusH},
+        {focusS},
+        {focusL}
+
 
         <Canvas
           camera={{ position: [0, 20, 0] }}
@@ -110,11 +135,14 @@ function App() {
         handleLabel={handleLabel}
         handleClick={handleClick}
         handleShape={handleShape}
-        // focus={focus}
-        onChange={handleChange}
+        onRgbChange={handleRgbChange}
+        onHslChange={handleHslChange}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
+        focusH={focusH}
+        focusS={focusS}
+        focusL={focusL}
       />
     </>
   );
@@ -158,8 +186,6 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
     config: { duration: "500" }
   });
 
-  // const color ="#" + convert.rgb.hex(Math.round((r + 100) % 255), Math.round((g + 100) % 255), Math.round((b + 100) % 255)) 
-
   return (
 
     <animated.mesh
@@ -168,20 +194,16 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
       onClick={() => { props.onClick(r, g, b) }}
     >
 
-
       <sphereGeometry attach="geometry" args={[0.2, 32, 32]} />
       <meshStandardMaterial attach="material" color={color} opacity={opacity} transparent={false} />
       <Html
         zIndexRange={[100, 5]}
       >
-
-
         <div
-
           style={{
             fontSize: '8px',
             display: props.isLabelShown ? 'block' : 'none',
-            color: "#" + convert.rgb.hex(Math.round((r + 100) % 255), Math.round((g + 100) % 255), Math.round((b + 100) % 255))
+            // color: "#" + convert.rgb.hex(Math.round((r + 100) % 255), Math.round((g + 100) % 255), Math.round((b + 100) % 255))
           }}
         >
           {"#" + convert.rgb.hex(Math.round(r), Math.round(g), Math.round(b))}
