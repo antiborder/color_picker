@@ -1,8 +1,8 @@
-import './App.css';
-import convert from 'color-convert';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import styled from 'styled-components';
+import convert from 'color-convert';
 
+import './App.css';
 
 const ControlPane = (props) => {
   const [focusR, setFocusR] = useState(props.focusR)
