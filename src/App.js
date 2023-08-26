@@ -7,7 +7,6 @@ import ControlPane from './ControlPane'
 import Space from './Space'
 
 
-//hsvを追加
 //particleの8というマジックナンバーを消す
 //座標軸
 //ホバーしたら大きくなる。大きくならないとクリックできない。
@@ -29,9 +28,14 @@ function App() {
   const [focusR, setFocusR] = useState(255)
   const [focusG, setFocusG] = useState(255)
   const [focusB, setFocusB] = useState(255)
+
   const [focusH, setFocusH] = useState(0)
   const [focusS, setFocusS] = useState(100)
   const [focusL, setFocusL] = useState(100)
+
+  const [focusHsvS, setFocusHsvS] = useState(100)
+  const [focusV, setFocusV] = useState(100)
+
 
   const handleRgbChange = (event, colorParam) => {
     switch (colorParam) {
@@ -45,7 +49,11 @@ function App() {
     setFocusH(convert.rgb.hsl([focusR, focusG, focusB])[0]);
     setFocusS(convert.rgb.hsl([focusR, focusG, focusB])[1]);
     setFocusL(convert.rgb.hsl([focusR, focusG, focusB])[2]);
+    //RGBからHSVに変換
+    setFocusHsvS(convert.rgb.hsv([focusR, focusG, focusB])[1]);
+    setFocusV(convert.rgb.hsv([focusR, focusG, focusB])[2]);
   }
+
   const handleHslChange = (event, colorParam) => {
     switch (colorParam) {
       case 'H':
@@ -58,8 +66,29 @@ function App() {
     setFocusR(convert.hsl.rgb([focusH, focusS, focusL])[0]);
     setFocusG(convert.hsl.rgb([focusH, focusS, focusL])[1]);
     setFocusB(convert.hsl.rgb([focusH, focusS, focusL])[2]);
+    //HSLからHSVに変換
+    setFocusHsvS(convert.hsl.hsv([focusH, focusS, focusL])[1]);
+    setFocusV(convert.hsl.hsv([focusH, focusS, focusL])[2]);
+
   }
 
+  const handleHsvChange = (event, colorParam) => {
+    switch (colorParam) {
+      case 'H':
+        setFocusH(event.target.value); break;
+      case 'HsvS':
+        setFocusHsvS(event.target.value); break;
+      case 'V':
+        setFocusV(event.target.value); break;
+    }
+    //HSVからRGBに変換
+    setFocusR(convert.hsv.rgb([focusH, focusHsvS, focusV])[0]);
+    setFocusG(convert.hsv.rgb([focusH, focusHsvS, focusV])[1]);
+    setFocusB(convert.hsv.rgb([focusH, focusHsvS, focusV])[2]);
+    //HSVからHSLに変換
+    setFocusS(convert.hsv.hsl([focusH, focusHsvS, focusV])[1]);
+    setFocusL(convert.hsv.hsl([focusH, focusHsvS, focusV])[2]);
+  }
 
   const handleClick = (r, g, b) => {
     setFocusR(r)
@@ -73,7 +102,7 @@ function App() {
     setIsLabelShown(isLabelShown ? false : true);
   };
   const handleShape = () => {
-    setShape(shape === 'CUBE' ? 'CAKE' : 'CUBE');
+    setShape(shape === 'CUBE' ? 'CAKE' : shape==='CAKE' ? 'CONE' : 'CUBE');
   };
 
 
@@ -83,7 +112,8 @@ function App() {
       <div className="App">
         {focusR},
         {focusG},
-        {focusB}<br />
+        {focusB}
+        <br />
         {focusH},
         {focusS},
         {focusL}
@@ -103,12 +133,15 @@ function App() {
         handleShape={handleShape}
         onRgbChange={handleRgbChange}
         onHslChange={handleHslChange}
+        onHsvChange={handleHsvChange}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
         focusH={focusH}
         focusS={focusS}
         focusL={focusL}
+        focusHsvS={focusHsvS}
+        focusV={focusV}    
       />
     </>
   );

@@ -46,6 +46,17 @@ const Space = (props) => {
         ).toArray()
     }
 
+    const conePosition = (r, g, b) => {
+        const [h, s, v] = convert.rgb.hsv(Math.round(r), Math.round(g), Math.round(b))
+
+        return (new THREE.Vector3(
+            s * Math.sin(h * 2 * 3.14 / 360) / (2 * 8),
+            s * Math.cos(h * 2 * 3.14 / 360) / (2 * 8),
+            (v - 50) / (8 * 3 / 2)
+        )
+        ).toArray()
+    }
+
     return (
         <div>
 
@@ -64,11 +75,12 @@ const Space = (props) => {
                         {...props}
                         chandelierPosition={chandelierPosition}
                         cubePosition={cubePosition}
+                        conePosition={conePosition}
                     />
                     <Focus {...props}
                         chandelierPosition={chandelierPosition}
                         cubePosition={cubePosition}
-
+                        conePosition={conePosition}
                     />
                 </group>
             </Canvas>
@@ -83,14 +95,15 @@ const Focus = (props) => {
     return (
         <>
             <group
-                        position={
-                            props.shape === 'CUBE' ?
-                                props.cubePosition(props.focusR, props.focusG, props.focusB) :
-                                props.chandelierPosition(props.focusR, props.focusG, props.focusB)}
-
-
+                position={
+                    props.shape === 'CUBE' ?
+                        props.cubePosition(props.focusR, props.focusG, props.focusB) :
+                        props.shape === 'CAKE' ?
+                            props.chandelierPosition(props.focusR, props.focusG, props.focusB) :
+                            props.conePosition(props.focusR, props.focusG, props.focusB)
+                }
             >
-                <Html style={{top: '-25px',left:  '-10px', fontSize:'24px', color:'red'}}
+                <Html style={{ top: '-25px', left: '-10px', fontSize: '24px', color: 'red' }}
                 >
                     ▼
                 </Html>
@@ -147,7 +160,9 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
         to: {
             position: props.shape === 'CUBE' ?
                 props.cubePosition(props.r, props.g, props.b) :
-                props.chandelierPosition(props.r, props.g, props.b)
+                props.shape === 'CAKE' ?
+                    props.chandelierPosition(props.r, props.g, props.b) :
+                    props.conePosition(props.r, props.g, props.b),
 
         },
         config: { duration: "500" }

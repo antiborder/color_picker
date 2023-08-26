@@ -1,54 +1,10 @@
-import { useState} from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import convert from 'color-convert';
 
 import './App.css';
 
 const ControlPane = (props) => {
-  const [focusR, setFocusR] = useState(props.focusR)
-  const [focusG, setFocusG] = useState(props.focusG)
-  const [focusB, setFocusB] = useState(props.focusB)
-  const [focusH, setFocusH] = useState(props.focusH)
-  const [focusS, setFocusS] = useState(props.focusS)
-  const [focusL, setFocusL] = useState(props.focusL)
-
-  // useEffect(
-  //   () => {
-  //     setFocusR(props.focusR);
-  //     setFocusG(props.focusG);
-  //     setFocusB(props.focusB);
-  //     setFocusH(props.focusH);
-  //     setFocusS(props.focusS);
-  //     setFocusL(props.focusL);
-  //   }
-  //   , [props.focusR, props.focusG, props.focusB, props.focusH, props.focusS, props.focusL]);
-
-
-  const handleRgbChange = (event, colorParam) => {
-    // switch (colorParam) {
-    //   case 'R': setFocusR(props.focusR); console.log(props.focusR);
-    //     console.log(convert.rgb.hex([props.focusR,props.focusG,props.focusB]))
-    //     break;
-
-    //   case 'G': setFocusG(props.focusG); break;
-    //   case 'B': setFocusB(props.focusB); break;
-    // }
-    // setFocusH(props.focusH);
-    // setFocusS(props.focusS);
-    // setFocusL(props.focusL);
-
-    props.onRgbChange(event, colorParam)
-  }
-
-  const handleHslChange = (event, colorParam) => {
-    // setFocusH(props.focusH)
-    // setFocusS(props.focusS)
-    // setFocusL(props.focusL)
-    // setFocusR(props.focusR)
-    // setFocusG(props.focusG)
-    // setFocusB(props.focusB)
-    props.onHslChange(event, colorParam)
-  }
 
   return (
     <StyledControlPane
@@ -65,46 +21,10 @@ const ControlPane = (props) => {
         <div className='color-sample' style={{ backgroundColor: '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) }}>&nbsp; </div>
         <div className='hex'>{'#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB])} </div>
       </div>
-      <div style={{ padding: '10px' }}>
-        <SliderContainer
-          symbol={'R'}
-          value={props.focusR}
-          max={255}
-          onChange={(event) => handleRgbChange(event, 'R')}
-        />
-        <SliderContainer
-          symbol={'G'}
-          value={props.focusG}
-          max={255}
-          onChange={(event) => handleRgbChange(event, 'G')}
-        />
-        <SliderContainer
-          symbol={'B'}
-          value={props.focusB}
-          max={255}
-          onChange={(event) => handleRgbChange(event, 'B')}
-        />
-      </div>
-      <div style={{ padding: '10px' }}>
-        <SliderContainer
-          symbol={'H'}
-          value={props.focusH}
-          max={360}
-          onChange={(event) => handleHslChange(event, 'H')}
-        />
-        <SliderContainer
-          symbol={'S'}
-          value={props.focusS}
-          max={100}
-          onChange={(event) => handleHslChange(event, 'S')}
-        />
-        <SliderContainer
-          symbol={'L'}
-          value={props.focusL}
-          max={100}
-          onChange={(event) => handleHslChange(event, 'L')}
-        />
-      </div>
+      <RgbSliders         {...props} />
+      <HslSliders        {...props} />
+      <HsvSliders        {...props} />
+
       <div style={{ display: 'flex' }}>
         <div style={{ backgroundColor: '#FF0000', width: '24px', margin: '4px 4px 4px 4px' }}>        R    </div>
         <div style={{ backgroundColor: '#00FF00', width: '24px', margin: '4px 4px 4px 4px' }}>        G      </div>
@@ -115,6 +35,82 @@ const ControlPane = (props) => {
     </StyledControlPane>
   )
 }
+
+const RgbSliders = (props) => {
+  return (
+    <div style={{ padding: '10px' }}>
+      <SliderContainer
+        symbol={'R'}
+        value={props.focusR}
+        max={255}
+        onChange={(event) => props.onRgbChange(event, 'R')}
+      />
+      <SliderContainer
+        symbol={'G'}
+        value={props.focusG}
+        max={255}
+        onChange={(event) => props.onRgbChange(event, 'G')}
+      />
+      <SliderContainer
+        symbol={'B'}
+        value={props.focusB}
+        max={255}
+        onChange={(event) => props.onRgbChange(event, 'B')}
+      />
+    </div>
+  )
+}
+
+const HslSliders = (props) => {
+  return (
+    <div style={{ padding: '10px' }}>
+      <SliderContainer
+        symbol={'H'}
+        value={props.focusH}
+        max={360}
+        onChange={(event) => props.onHslChange(event, 'H')}
+      />
+      <SliderContainer
+        symbol={'S'}
+        value={props.focusS}
+        max={100}
+        onChange={(event) => props.onHslChange(event, 'S')}
+      />
+      <SliderContainer
+        symbol={'L'}
+        value={props.focusL}
+        max={100}
+        onChange={(event) => props.onHslChange(event, 'L')}
+      />
+    </div>
+  )
+}
+
+const HsvSliders = (props) => {
+  return (
+    <div style={{ padding: '10px' }}>
+      <SliderContainer
+        symbol={'H'}
+        value={props.focusH}
+        max={360}
+        onChange={(event) => props.onHsvChange(event, 'H')}
+      />
+      <SliderContainer
+        symbol={'S'}
+        value={props.focusHsvS}
+        max={100}
+        onChange={(event) => props.onHsvChange(event, 'HsvS')}
+      />
+      <SliderContainer
+        symbol={'V'}
+        value={props.focusV}
+        max={100}
+        onChange={(event) => props.onHsvChange(event, 'V')}
+      />
+    </div>
+  )
+}
+
 
 const SliderContainer = (props) => {
   const [value, setValue] = useState(props.value)
