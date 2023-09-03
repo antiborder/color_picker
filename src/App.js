@@ -4,14 +4,15 @@ import convert from 'color-convert';
 
 import './App.css';
 import ControlPane from './ControlPane'
-import Space from './Space'
+import Structure from './Structure'
 
 
-//particleの8というマジックナンバーを消す
-//座標軸
-//ホバーしたら大きくなる。大きくならないとクリックできない。
-//focusのアイコンを立体的に回転
 //RGBとHSLとHSVのボタン
+//透過平面にターゲット線を表示
+//ホバーしたらバブルが出る。バブルから色情報を表示。色を選択できる。
+//focusのアイコンを立体的に回転
+//座標軸
+//Focusの残像が残る。
 //色の明るさ調整
 //表示近さ調整
 //RGBとHSLとHSVの解説
@@ -22,8 +23,9 @@ import Space from './Space'
 
 function App() {
 
-  const [shape, setShape] = useState('CAKE')
+  const [shape, setShape] = useState('RGB')
   const [isLabelShown, setIsLabelShown] = useState(false)
+  const [lastChanged, setLastChanged] = useState('R')
 
   const [focusR, setFocusR] = useState(255)
   const [focusG, setFocusG] = useState(255)
@@ -35,9 +37,11 @@ function App() {
 
   const [focusHsvS, setFocusHsvS] = useState(100)
   const [focusV, setFocusV] = useState(100)
+  
 
 
   const handleRgbChange = (event, colorParam) => {
+    setLastChanged(colorParam);
     switch (colorParam) {
       case 'R':
         setFocusR(event.target.value); break;
@@ -45,6 +49,8 @@ function App() {
         setFocusG(event.target.value); break;
       case 'B':
         setFocusB(event.target.value); break;
+      default:
+        setFocusR(event.target.value); break;
     }
     setFocusH(convert.rgb.hsl([focusR, focusG, focusB])[0]);
     setFocusS(convert.rgb.hsl([focusR, focusG, focusB])[1]);
@@ -102,7 +108,7 @@ function App() {
     setIsLabelShown(isLabelShown ? false : true);
   };
   const handleShape = () => {
-    setShape(shape === 'CUBE' ? 'CAKE' : shape==='CAKE' ? 'CONE' : 'CUBE');
+    setShape(shape === 'RGB' ? 'HSL' : shape==='HSL' ? 'HSV' : 'RGB');
   };
 
 
@@ -119,13 +125,18 @@ function App() {
         {focusL}
 
       </div>
-      <Space 
+      <Structure 
         shape ={shape}
         isLabelShown = {isLabelShown}
         onClick = {handleClick}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
+        focusH={focusH}
+        focusS={focusS}
+        focusL={focusL}
+        focusHsvS={focusHsvS}
+        focusV={focusV}
         />
       <ControlPane
         handleLabel={handleLabel}
