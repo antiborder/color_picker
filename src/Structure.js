@@ -7,6 +7,7 @@ import convert from 'color-convert';
 import './App.css';
 import Focus from './Focus';
 import FocusPlane from './FocusPlane';
+import FocusLine from './FocusLine';
 import Particles from './Particles';
 
 
@@ -108,9 +109,17 @@ const Structure = (props) => {
                         cylinderRadius={cylinderRadius}
                         cylinderHeight={cylinderHeight}
                     />
+                    <FocusLine {...props}
+                        rgbPosition={rgbPosition}
+                        hslPosition={hslPosition}
+                        hsvPosition={hsvPosition}
 
+                        rescaleHsl={rescaleHsl}
+                        cylindricalToCartesian={cylindricalToCartesian}
 
-
+                        cylinderRadius={cylinderRadius}
+                        cylinderHeight={cylinderHeight}
+                    />
                 </group>
             </Canvas>
         </div>
