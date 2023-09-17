@@ -7,14 +7,18 @@ const Disc = (props) => {
     const geometry = new THREE.CircleGeometry(props.radius, 32);
     // 白いマテリアルの作成
     const material = new THREE.MeshBasicMaterial({
-      color: 0xffffff, // 白色の16進数表現
-      opacity: 0.5,
+      color: 0xffffff,
+      opacity: 0.3,
       transparent: true,
       side: THREE.DoubleSide
     });
   
     return (
-      <mesh position={props.position} rotation={[Math.PI / 2, 0, 0]} geometry={geometry} material={material} />
+      <mesh 
+      position={props.position} 
+      rotation={[Math.PI / 2, 0, 0]} 
+      geometry={geometry} 
+      material={material} />
     );
   };
 

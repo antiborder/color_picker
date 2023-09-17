@@ -5,22 +5,19 @@ import * as THREE from 'three';
 const Cylinder = (props) => {
     // ジオメトリの作成
     const geometry = new THREE.CylinderGeometry(props.radius, props.radius, props.height, 32, 1, true);
-    // 青いマテリアルの作成
     const material = new THREE.MeshBasicMaterial({
-        color: "white",
-        opacity: 0.4,
+        color: 0xffffff,
+        opacity: 0.2,
         transparent: true,
-        side: props.side,
+        side: THREE.DoubleSide
     });
 
     return (
-
         <mesh
             geometry={geometry}
             material={material}
             position={[0,0,0]}
         >
-            <meshBasicMaterial attach="material"/>
         </mesh>
     );
 };

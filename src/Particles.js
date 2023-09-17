@@ -103,7 +103,11 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
             scale={scale}
         >
             <sphereGeometry attach="geometry" args={[0.2, 32, 32]} />
-            <meshStandardMaterial attach="material" color={color} opacity={opacity} transparent={false} />
+            <meshStandardMaterial
+                attach="material"
+                color={color}
+                opacity={opacity}
+                transparent={false} />
             <Html
                 zIndexRange={[100, 5]}
             >
