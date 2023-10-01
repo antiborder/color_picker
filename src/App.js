@@ -1,82 +1,46 @@
-import './App.css';
-import { Canvas } from '@react-three/fiber';
-import * as THREE from 'three';
-import { OrbitControls } from '@react-three/drei';
+import { useState } from 'react';
+
 import convert from 'color-convert';
-import { Html } from '@react-three/drei';
-import { useState, useEffect } from 'react';
-import { useSpring, animated } from "@react-spring/three"
-import styled from 'styled-components';
+
+import './App.css';
 import ControlPane from './ControlPane'
+import Structure from './Structure'
 
-//Gitにpush
-
-//hslをスライダで指定
-//mapに現在位置を表示
-//hsvを追加
+//ホバーしたらバブルが出る。バブルから色情報を表示。色を選択できる。
+//focusのアイコンの移動をスムーズに。遅れないように。
+//カラーコードを入力できるように。
 //座標軸
-//重なってる場合に奥のparticleをクリックしてしまう
+//色とshapeとmainElementの初期値はランダムで。
+//Focusの残像が残る。
 //色の明るさ調整
 //表示近さ調整
-//平面で選色
-//線に沿って選色
+//RGBとHSLとHSVの解説
 //ログイン
 //自分のパレットに保存
 
 function App() {
 
-  const [shape, setShape] = useState('CAKE')
+  const [shape, setShape] = useState('RGB')
   const [isLabelShown, setIsLabelShown] = useState(false)
-  // const [focus, setFocus] = useState('#FFFFFF')
+  const [, setLastChanged] = useState('R')
+
   const [focusR, setFocusR] = useState(255)
   const [focusG, setFocusG] = useState(255)
   const [focusB, setFocusB] = useState(255)
 
-  const cameraPosition = [-2, 0, 7]; // カメラの位置
-  const particles = [];
+  const [focusH, setFocusH] = useState(0)
+  const [focusS, setFocusS] = useState(100)
+  const [focusL, setFocusL] = useState(100)
 
-  const division = 6
-  const step = 255 / division
+  const [focusHsvS, setFocusHsvS] = useState(100)
+  const [focusV, setFocusV] = useState(100)
 
-  const rRange = 255;
-  const gRange = 255;
-  const bRange = 255;
+  const [rgbMainElement, setRgbMainElement] = useState('R')
+  const [hslMainElement, setHslMainElement] = useState('H')
+  const [hsvMainElement, setHsvMainElement] = useState('H')
 
-  const handleClick = (r, g, b) => {
-    // const color = "#" + convert.rgb.hex(r, g, b)
-    // setFocus(color)
-    setFocusR(r)
-    setFocusG(g)
-    setFocusB(b)
-  }
-  const handleLabel = () => {
-    setIsLabelShown(isLabelShown ? false : true);
-  };
-  const handleShape = () => {
-    setShape(shape === 'CUBE' ? 'CAKE' : 'CUBE');
-  };
-
-  for (let r = 0; r <= rRange; r += step) {
-    for (let g = 0; g <= gRange; g += step) {
-      for (let b = 0; b <= bRange; b += step) {
-        particles.push(
-          <Particle
-            key={[r, g, b]}
-            r={r}
-            g={g}
-            b={b}
-            shape={shape}
-            emissive={new THREE.Color('#000000')}
-            division={division}
-            isLabelShown={isLabelShown}
-            onClick={handleClick}
-          />
-        )
-      }
-    }
-  }
-
-  const handleChange = (event, colorParam) => {
+  const handleRgbChange = (event, colorParam) => {
+    setLastChanged(colorParam);
     switch (colorParam) {
       case 'R':
         setFocusR(event.target.value); break;
@@ -84,37 +48,150 @@ function App() {
         setFocusG(event.target.value); break;
       case 'B':
         setFocusB(event.target.value); break;
+      default:
+        setFocusR(event.target.value); break;
     }
+    setFocusH(convert.rgb.hsl([focusR, focusG, focusB])[0]);
+    setFocusS(convert.rgb.hsl([focusR, focusG, focusB])[1]);
+    setFocusL(convert.rgb.hsl([focusR, focusG, focusB])[2]);
+    //RGBからHSVに変換
+    setFocusHsvS(convert.rgb.hsv([focusR, focusG, focusB])[1]);
+    setFocusV(convert.rgb.hsv([focusR, focusG, focusB])[2]);
   }
 
+  const handleHslChange = (event, colorParam) => {
+    switch (colorParam) {
+      case 'H':
+        setFocusH(event.target.value); break;
+      case 'S':
+        setFocusS(event.target.value); break;
+      case 'L':
+        setFocusL(event.target.value); break;
+      default:
+        setFocusH(event.target.value); break;
+    }
+    setFocusR(convert.hsl.rgb([focusH, focusS, focusL])[0]);
+    setFocusG(convert.hsl.rgb([focusH, focusS, focusL])[1]);
+    setFocusB(convert.hsl.rgb([focusH, focusS, focusL])[2]);
+    //HSLからHSVに変換
+    setFocusHsvS(convert.hsl.hsv([focusH, focusS, focusL])[1]);
+    setFocusV(convert.hsl.hsv([focusH, focusS, focusL])[2]);
+
+  }
+
+  const handleHsvChange = (event, colorParam) => {
+    switch (colorParam) {
+      case 'H':
+        setFocusH(event.target.value); break;
+      case 'HsvS':
+        setFocusHsvS(event.target.value); break;
+      case 'V':
+        setFocusV(event.target.value); break;
+      default:
+        setFocusH(event.target.value); break;
+    }
+    //HSVからRGBに変換
+    setFocusR(convert.hsv.rgb([focusH, focusHsvS, focusV])[0]);
+    setFocusG(convert.hsv.rgb([focusH, focusHsvS, focusV])[1]);
+    setFocusB(convert.hsv.rgb([focusH, focusHsvS, focusV])[2]);
+    //HSVからHSLに変換
+    setFocusS(convert.hsv.hsl([focusH, focusHsvS, focusV])[1]);
+    setFocusL(convert.hsv.hsl([focusH, focusHsvS, focusV])[2]);
+  }
+
+  const handleClick = (r, g, b) => {
+    setFocusR(r)
+    setFocusG(g)
+    setFocusB(b)
+    setFocusH(convert.rgb.hsl([r, g, b])[0])
+    setFocusS(convert.rgb.hsl([r, g, b])[1])
+    setFocusL(convert.rgb.hsl([r, g, b])[2])
+    setFocusHsvS(convert.rgb.hsv([r, g, b])[1]);
+    setFocusV(convert.rgb.hsv([r, g, b])[2]);
+  }
+
+  const handleHsvElementClick = (h, s, v) => {
+    setFocusH(h)
+    setFocusHsvS(s)
+    setFocusV(v)
+    setFocusR(convert.hsv.rgb([h, s, v])[0])
+    setFocusG(convert.hsv.rgb([h, s, v])[1])
+    setFocusB(convert.hsv.rgb([h, s, v])[2])
+    setFocusH(convert.hsv.hsl([h, s, v])[0])
+    setFocusS(convert.hsv.hsl([h, s, v])[1])
+    setFocusL(convert.hsv.hsl([h, s, v])[2])
+  }
+
+  const handleLabel = () => {
+    setIsLabelShown(isLabelShown ? false : true);
+  };
+  const handleShapeClick = (shape) => {
+    switch (shape) {
+      case 'RGB':
+        setShape('RGB'); break;
+      case 'HSL':
+        setShape('HSL'); break;
+      case 'HSV':
+        setShape('HSV'); break;
+      default:
+        setShape('RGB'); break;    
+    }
+  };
 
   return (
     <>
-
-      <div className="App">
-        {focusR}
-        {focusG}
-        {focusB}
-
-        <Canvas
-          camera={{ position: [0, 20, 0] }}
-          style={{ height: '700px' }}
-        >
-          <color attach="background" args={['#C3C3C3']} />
-          <ambientLight color='#ffffff' intensity={1} />
-          <OrbitControls args={[cameraPosition]} />
-          {particles}
-        </Canvas>
-      </div>
-      <ControlPane
-        handleLabel={handleLabel}
-        handleClick={handleClick}
-        handleShape={handleShape}
-        // focus={focus}
-        onChange={handleChange}
+      <Structure
+        shape={shape}
+        isLabelShown={isLabelShown}
+        onClick={handleClick}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
+        focusH={focusH}
+        focusS={focusS}
+        focusL={focusL}
+        focusHsvS={focusHsvS}
+        focusV={focusV}
+        rgbMainElement={rgbMainElement}
+        hslMainElement={hslMainElement}
+        hsvMainElement={hsvMainElement}
+      />
+      <ControlPane
+        handleLabel={handleLabel}
+        handleClick={handleClick}
+        handleHsvElementClick={handleHsvElementClick}
+        onShapeClick={handleShapeClick}
+        onRgbChange={handleRgbChange}
+        onHslChange={handleHslChange}
+        onHsvChange={handleHsvChange}
+        setRgbMainElement={(symbol) => {
+          setShape('RGB');
+          setRgbMainElement(symbol);
+        }}
+        setHslMainElement={(symbol) => {
+          setShape('HSL');
+          setHslMainElement(symbol);
+        }}
+        setHsvMainElement={(symbol) => {
+          setShape('HSV');
+          setHsvMainElement(symbol);
+        }}
+        shape={shape}
+        focusR={focusR}
+        focusG={focusG}
+        focusB={focusB}
+        focusH={focusH}
+        focusS={focusS}
+        focusL={focusL}
+        focusHsvS={focusHsvS}
+        focusV={focusV}
+        rgbMainElement={rgbMainElement}
+        hslMainElement={hslMainElement}
+        hsvMainElement={hsvMainElement}
+        setFocusR={setFocusR}
+        setFocusG={setFocusG}
+        setFocusB={setFocusB}
+
       />
     </>
   );
@@ -122,72 +199,3 @@ function App() {
 
 export default App;
 
-const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...props }) => {
-  const [r, setR] = useState(props.r)
-  const [g, setG] = useState(props.g)
-  const [b, setB] = useState(props.b)
-
-  color = '#' + convert.rgb.hex(Math.round(r), Math.round(g), Math.round(b))
-  const [h, s, l] = convert.rgb.hsl(Math.round(r), Math.round(g), Math.round(b))
-
-  const CubeRotationQuaternion = new THREE.Quaternion().setFromUnitVectors((new THREE.Vector3(1, -1, 1)).normalize(), new THREE.Vector3(0, 1, 0));
-  const CakeRotationQuaternion = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 1, 0));
-
-  let x = s * Math.sin(h * 2 * 3.14 / 360) / (2 * 8)
-  let y = s * Math.cos(h * 2 * 3.14 / 360) / (2 * 8)
-  let z = (l - 50) / (8 * 3 / 2)
-  const { position } = useSpring({
-    from: { position: [0, 0, 0] },
-    to: {
-      position: props.shape === 'CUBE' ?
-        (
-          new THREE.Vector3(
-            (props.r / 255 - 0.5) * 8,
-            (-props.g / 255 + 0.5) * 8,
-            (props.b / 255 - 0.5) * 8
-          ).applyQuaternion(CubeRotationQuaternion)
-        ).toArray() :
-        (
-          new THREE.Vector3(
-            x,
-            y,
-            z
-          ).applyQuaternion(CakeRotationQuaternion)
-        ).toArray()
-    },
-    config: { duration: "500" }
-  });
-
-  // const color ="#" + convert.rgb.hex(Math.round((r + 100) % 255), Math.round((g + 100) % 255), Math.round((b + 100) % 255)) 
-
-  return (
-
-    <animated.mesh
-      position={position}
-      {...props}
-      onClick={() => { props.onClick(r, g, b) }}
-    >
-
-
-      <sphereGeometry attach="geometry" args={[0.2, 32, 32]} />
-      <meshStandardMaterial attach="material" color={color} opacity={opacity} transparent={false} />
-      <Html
-        zIndexRange={[100, 5]}
-      >
-
-
-        <div
-
-          style={{
-            fontSize: '8px',
-            display: props.isLabelShown ? 'block' : 'none',
-            color: "#" + convert.rgb.hex(Math.round((r + 100) % 255), Math.round((g + 100) % 255), Math.round((b + 100) % 255))
-          }}
-        >
-          {"#" + convert.rgb.hex(Math.round(r), Math.round(g), Math.round(b))}
-
-        </div>
-      </Html>
-    </animated.mesh>
-  );
-};
