@@ -6,10 +6,8 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//平面で選色
-//focusのアイコンの色を調整
-//focusのアイコンの移動をスムーズに。
 //ホバーしたらバブルが出る。バブルから色情報を表示。色を選択できる。
+//focusのアイコンの移動をスムーズに。遅れないように。
 //カラーコードを入力できるように。
 //座標軸
 //色とshapeとmainElementの初期値はランダムで。
@@ -17,7 +15,6 @@ import Structure from './Structure'
 //色の明るさ調整
 //表示近さ調整
 //RGBとHSLとHSVの解説
-//線に沿って選色
 //ログイン
 //自分のパレットに保存
 
@@ -37,7 +34,7 @@ function App() {
 
   const [focusHsvS, setFocusHsvS] = useState(100)
   const [focusV, setFocusV] = useState(100)
-  
+
   const [rgbMainElement, setRgbMainElement] = useState('R')
   const [hslMainElement, setHslMainElement] = useState('H')
   const [hsvMainElement, setHsvMainElement] = useState('H')
@@ -70,6 +67,8 @@ function App() {
         setFocusS(event.target.value); break;
       case 'L':
         setFocusL(event.target.value); break;
+      default:
+        setFocusH(event.target.value); break;
     }
     setFocusR(convert.hsl.rgb([focusH, focusS, focusL])[0]);
     setFocusG(convert.hsl.rgb([focusH, focusS, focusL])[1]);
@@ -88,6 +87,8 @@ function App() {
         setFocusHsvS(event.target.value); break;
       case 'V':
         setFocusV(event.target.value); break;
+      default:
+        setFocusH(event.target.value); break;
     }
     //HSVからRGBに変換
     setFocusR(convert.hsv.rgb([focusH, focusHsvS, focusV])[0]);
@@ -105,42 +106,44 @@ function App() {
     setFocusH(convert.rgb.hsl([r, g, b])[0])
     setFocusS(convert.rgb.hsl([r, g, b])[1])
     setFocusL(convert.rgb.hsl([r, g, b])[2])
+    setFocusHsvS(convert.rgb.hsv([r, g, b])[1]);
+    setFocusV(convert.rgb.hsv([r, g, b])[2]);
   }
+
+  const handleHsvElementClick = (h, s, v) => {
+    setFocusH(h)
+    setFocusHsvS(s)
+    setFocusV(v)
+    setFocusR(convert.hsv.rgb([h, s, v])[0])
+    setFocusG(convert.hsv.rgb([h, s, v])[1])
+    setFocusB(convert.hsv.rgb([h, s, v])[2])
+    setFocusH(convert.hsv.hsl([h, s, v])[0])
+    setFocusS(convert.hsv.hsl([h, s, v])[1])
+    setFocusL(convert.hsv.hsl([h, s, v])[2])
+  }
+
   const handleLabel = () => {
     setIsLabelShown(isLabelShown ? false : true);
   };
   const handleShapeClick = (shape) => {
-    switch(shape){
+    switch (shape) {
       case 'RGB':
         setShape('RGB'); break;
-      case 'HSL': 
+      case 'HSL':
         setShape('HSL'); break;
       case 'HSV':
         setShape('HSV'); break;
+      default:
+        setShape('RGB'); break;    
     }
   };
 
   return (
     <>
-
-      <div className="App">
-        {focusR},
-        {focusG},
-        {focusB}
-        <br />
-        {focusH},
-        {focusS},
-        {focusL}
-        <br />
-        {rgbMainElement},
-        {hslMainElement},
-        {hsvMainElement}
-      </div>
-
-      <Structure 
-        shape ={shape}
-        isLabelShown = {isLabelShown}
-        onClick = {handleClick}
+      <Structure
+        shape={shape}
+        isLabelShown={isLabelShown}
+        onClick={handleClick}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
@@ -152,27 +155,27 @@ function App() {
         rgbMainElement={rgbMainElement}
         hslMainElement={hslMainElement}
         hsvMainElement={hsvMainElement}
-        />
+      />
       <ControlPane
         handleLabel={handleLabel}
         handleClick={handleClick}
+        handleHsvElementClick={handleHsvElementClick}
         onShapeClick={handleShapeClick}
         onRgbChange={handleRgbChange}
         onHslChange={handleHslChange}
         onHsvChange={handleHsvChange}
-        setRgbMainElement={(symbol)=>{
+        setRgbMainElement={(symbol) => {
           setShape('RGB');
           setRgbMainElement(symbol);
         }}
-        setHslMainElement={(symbol)=>{
+        setHslMainElement={(symbol) => {
           setShape('HSL');
           setHslMainElement(symbol);
         }}
-        setHsvMainElement={(symbol)=>{
-          setShape('HSV');          
+        setHsvMainElement={(symbol) => {
+          setShape('HSV');
           setHsvMainElement(symbol);
         }}
-
         shape={shape}
         focusR={focusR}
         focusG={focusG}
@@ -181,10 +184,14 @@ function App() {
         focusS={focusS}
         focusL={focusL}
         focusHsvS={focusHsvS}
-        focusV={focusV} 
+        focusV={focusV}
         rgbMainElement={rgbMainElement}
         hslMainElement={hslMainElement}
         hsvMainElement={hsvMainElement}
+        setFocusR={setFocusR}
+        setFocusG={setFocusG}
+        setFocusB={setFocusB}
+
       />
     </>
   );

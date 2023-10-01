@@ -7,7 +7,7 @@ const Cylinder = (props) => {
     const geometry = new THREE.CylinderGeometry(props.radius, props.radius, props.height, 32, 1, true);
     const material = new THREE.MeshBasicMaterial({
         color: 0xffffff,
-        opacity: 0.2,
+        opacity: 0.3,
         transparent: true,
         side: THREE.DoubleSide
     });

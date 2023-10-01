@@ -20,10 +20,10 @@ const Focus = (props) => {
             <group
                 position={
                     props.shape === 'RGB' ?
-                        props.rgbPosition(props.focusR, props.focusG, props.focusB) :
+                        props.getRgbPosition(props.focusR, props.focusG, props.focusB) :
                         props.shape === 'HSL' ?
-                            props.hslPosition(props.focusR, props.focusG, props.focusB) :
-                            props.hsvPosition(props.focusR, props.focusG, props.focusB)
+                            props.getHslPosition(props.focusR, props.focusG, props.focusB) :
+                            props.getHsvPosition(props.focusR, props.focusG, props.focusB)
                 }
                 rotation={[0, 0, -Math.PI]}
             >
@@ -35,17 +35,20 @@ const Focus = (props) => {
                         <Text
 
 
-                            color={props.focusL <= 80 ?
-                                '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) :
+                            color={
+                                // props.focusL <= 80 ?
+                                // '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) :
                                 '#000000'}
                             fontSize={1.1}
                         >
                             {'V'}
                         </Text>
                         <Text
-                            color={props.focusL <= 80 ?
-                                '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) :
-                                '#000000'}
+                            color={
+                                // props.focusL <= 80 ?
+                                // '#' + convert.rgb.hex([props.focusR, props.focusG, props.focusB]) :
+                                '#000000'
+                            }
                             fontSize={1.6}
                             position={[0, 0.2, 0]}
                         >

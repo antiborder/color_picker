@@ -65,10 +65,10 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
         },
         to: {
             position: props.shape === 'RGB' ?
-                props.rgbPosition(props.r, props.g, props.b) :
+                props.getRgbPosition(props.r, props.g, props.b) :
                 props.shape === 'HSL' ?
-                    props.hslPosition(props.r, props.g, props.b) :
-                    props.hsvPosition(props.r, props.g, props.b),
+                    props.getHslPosition(props.r, props.g, props.b) :
+                    props.getHsvPosition(props.r, props.g, props.b),
         },
         config: { duration: "500" }
     });

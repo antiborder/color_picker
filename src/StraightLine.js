@@ -10,7 +10,7 @@ const StraightLine = (props) => {
                 <Line
                     points={props.points}
                     color={props.color}
-                    lineWidth={2}
+                    lineWidth={3}
                 />
             </>
         )
