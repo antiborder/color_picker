@@ -1,11 +1,7 @@
 import React from 'react'
-import * as THREE from 'three'
-import Cylinder from './Cylinder'
-import Quadrilateral from './Quadrilateral'
-import Disc from './Disc'
 import StraightLine from './StraightLine'
 import Circle from './Circle'
-import convert from 'color-convert';
+import {colors} from './constants/colors'
 
 
 const FocusLine = (props) => {
@@ -22,30 +18,42 @@ const FocusLine = (props) => {
                     {props.rgbMainElement !== 'R' && (
                         <StraightLine
                             points={[
-                                props.rgbPosition(0, props.focusG, props.focusB),
-                                props.rgbPosition(255, props.focusG, props.focusB)
+                                props.getRgbPosition(0, props.focusG, props.focusB),
+                                props.getRgbPosition(255, props.focusG, props.focusB)
                             ]}
-                            color={'#FF0000'}
+                            color={
+                                colors[
+                                    props.rgbMainElement === 'G'?'B':'G'
+                                ]
+                            }
                         />
                     )}
 
                     {props.rgbMainElement !== 'G' && (
                         <StraightLine
                             points={[
-                                props.rgbPosition(props.focusR, 0, props.focusB),
-                                props.rgbPosition(props.focusR, 255, props.focusB)
+                                props.getRgbPosition(props.focusR, 0, props.focusB),
+                                props.getRgbPosition(props.focusR, 255, props.focusB)
                             ]}
-                            color={'#00AA00'}
+                            color={
+                                colors[
+                                    props.rgbMainElement === 'B'?'R':'B'
+                                ]
+                            }
                         />
                     )}
 
                     {props.rgbMainElement !== 'B' && (
                         <StraightLine
                             points={[
-                                props.rgbPosition(props.focusR, props.focusG, 0),
-                                props.rgbPosition(props.focusR, props.focusG, 255)
+                                props.getRgbPosition(props.focusR, props.focusG, 0),
+                                props.getRgbPosition(props.focusR, props.focusG, 255)
                             ]}
-                            color={'#0000FF'}
+                            color={
+                                colors[
+                                    props.rgbMainElement === 'R'?'G':'R'
+                                ]
+                            }
                         />
                     )}
 
@@ -57,7 +65,7 @@ const FocusLine = (props) => {
                         <Circle
                             radius={rescaledS}
                             position={[0, 0, rescaledL]}
-                            color={'#' + convert.hsl.hex([0, 0, props.focusL])}
+                            color={colors["W"]}
                         />
                     )}
 
@@ -75,7 +83,7 @@ const FocusLine = (props) => {
                                     rescaledL
                                 )
                             ]}
-                            color={'#' + convert.hsl.hex([props.focusH, 100, 40])}
+                            color={colors['K']}
                         />
                     )}
 
@@ -92,9 +100,8 @@ const FocusLine = (props) => {
                                     rescaledS,
                                     props.cylinderHeight / 2
                                 )
-
                             ]}
-                            color={'#888888'}
+                            color={colors["DEEP_GRAY"]}
                         />
                     )}
                 </>
@@ -105,7 +112,7 @@ const FocusLine = (props) => {
                         <Circle
                             radius={rescaledHsvS}
                             position={[0, 0, rescaledV]}
-                            color={'#' + convert.hsl.hex([0, 0, props.focusV])}
+                            color={colors["W"]}
                         />
                     )}
 
@@ -123,7 +130,7 @@ const FocusLine = (props) => {
                                     rescaledV
                                 )
                             ]}
-                            color={'#' + convert.hsl.hex([props.focusH, 100, 40])}
+                            color={colors["K"]}
                         />
                     )}
 
@@ -142,12 +149,11 @@ const FocusLine = (props) => {
                                 )
 
                             ]}
-                            color={'#888888'}
+                            color={colors["DEEP_GRAY"]}
                         />
                     )}
                 </>
             )}
-
         </>
     )
 }

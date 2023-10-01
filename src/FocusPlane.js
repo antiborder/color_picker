@@ -8,24 +8,24 @@ import Disc from './Disc'
 const FocusPlane = (props) => {
 
     const rSquareCorners = [
-        props.rgbPosition(props.focusR, 0, 0),
-        props.rgbPosition(props.focusR, 255, 0),
-        props.rgbPosition(props.focusR, 255, 255),
-        props.rgbPosition(props.focusR, 0, 255)
+        props.getRgbPosition(props.focusR, 0, 0),
+        props.getRgbPosition(props.focusR, 255, 0),
+        props.getRgbPosition(props.focusR, 255, 255),
+        props.getRgbPosition(props.focusR, 0, 255)
     ]
 
     const gSquareCorners = [
-        props.rgbPosition(0, props.focusG, 0),
-        props.rgbPosition(255, props.focusG, 0),
-        props.rgbPosition(255, props.focusG, 255),
-        props.rgbPosition(0, props.focusG, 255)
+        props.getRgbPosition(0, props.focusG, 0),
+        props.getRgbPosition(255, props.focusG, 0),
+        props.getRgbPosition(255, props.focusG, 255),
+        props.getRgbPosition(0, props.focusG, 255)
     ]
 
     const bSquareCorners = [
-        props.rgbPosition(0, 0, props.focusB),
-        props.rgbPosition(255, 0, props.focusB),
-        props.rgbPosition(255, 255, props.focusB),
-        props.rgbPosition(0, 255, props.focusB)
+        props.getRgbPosition(0, 0, props.focusB),
+        props.getRgbPosition(255, 0, props.focusB),
+        props.getRgbPosition(255, 255, props.focusB),
+        props.getRgbPosition(0, 255, props.focusB)
     ]
 
     const [rescaledH, rescaledS, rescaledL] = props.rescaleHsl(props.focusH, props.focusS, props.focusL)

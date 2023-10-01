@@ -27,7 +27,7 @@ const Structure = (props) => {
             (b / 255 - 0.5) * structureSize
         ])
     }
-    const rgbPosition = (r, g, b) => {
+    const getRgbPosition = (r, g, b) => {
 
         const tiltRotationQuaternion = new THREE.Quaternion().setFromUnitVectors(
             (new THREE.Vector3(1, -1, 1)).normalize(),
@@ -63,13 +63,13 @@ const Structure = (props) => {
         ])
     }
 
-    const hslPosition = (r, g, b) => {
+    const getHslPosition = (r, g, b) => {
         const [h, s, l] = convert.rgb.hsl(Math.round(r), Math.round(g), Math.round(b))
         const [theta, radius, z] = rescaleHsl(h, s, l)
         return cylindricalToCartesian(theta, radius, z)
     }
 
-    const hsvPosition = (r, g, b) => {
+    const getHsvPosition = (r, g, b) => {
         const [h, s, v] = convert.rgb.hsv(Math.round(r), Math.round(g), Math.round(b))
         const [theta, radius, z] = rescaleHsl(h, s, v)
         return cylindricalToCartesian(theta, radius, z)
@@ -79,7 +79,7 @@ const Structure = (props) => {
         <div>
             <Canvas
                 camera={{ position: cameraPosition }}
-                style={{ height: '700px' }}
+                style={{ height: '120vh', width: '120vw' }}
             >
                 <color attach="background" args={['#C3C3C3']} />
 
@@ -89,19 +89,19 @@ const Structure = (props) => {
                     rotation={[-Math.PI / 2, 0, 0]}
                 >
                     <Particles {...props}
-                        rgbPosition={rgbPosition}
-                        hslPosition={hslPosition}
-                        hsvPosition={hsvPosition}
+                        getRgbPosition={getRgbPosition}
+                        getHslPosition={getHslPosition}
+                        getHsvPosition={getHsvPosition}
                     />
                     <Focus {...props}
-                        rgbPosition={rgbPosition}
-                        hslPosition={hslPosition}
-                        hsvPosition={hsvPosition}
+                        getRgbPosition={getRgbPosition}
+                        getHslPosition={getHslPosition}
+                        getHsvPosition={getHsvPosition}
                     />
                     <FocusPlane {...props}
-                        rgbPosition={rgbPosition}
-                        hslPosition={hslPosition}
-                        hsvPosition={hsvPosition}
+                        getRgbPosition={getRgbPosition}
+                        getHslPosition={getHslPosition}
+                        getHsvPosition={getHsvPosition}
 
                         rescaleHsl={rescaleHsl}
                         cylindricalToCartesian={cylindricalToCartesian}
@@ -110,9 +110,9 @@ const Structure = (props) => {
                         cylinderHeight={cylinderHeight}
                     />
                     <FocusLine {...props}
-                        rgbPosition={rgbPosition}
-                        hslPosition={hslPosition}
-                        hsvPosition={hsvPosition}
+                        getRgbPosition={getRgbPosition}
+                        getHslPosition={getHslPosition}
+                        getHsvPosition={getHsvPosition}
 
                         rescaleHsl={rescaleHsl}
                         cylindricalToCartesian={cylindricalToCartesian}
