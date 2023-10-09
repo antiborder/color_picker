@@ -10,7 +10,6 @@ const ControlPane = (props) => {
 
   return (
     <StyledControlPane>
-      
       <div >
         <button onClick={props.handleLabel}>Label</button>
       </div>
@@ -41,13 +40,13 @@ const ControlPane = (props) => {
 
       <TwoDPicker {...props} />
 
-      <div style={{ display: 'flex' }}>
+      {/* <div style={{ display: 'flex' }}>
         <div style={{ backgroundColor: '#FF0000', width: '24px', margin: '4px 4px 4px 4px' }}>        R    </div>
         <div style={{ backgroundColor: '#00FF00', width: '24px', margin: '4px 4px 4px 4px' }}>        G      </div>
         <div style={{ backgroundColor: '#0000FF', width: '24px', margin: '4px 4px 4px 4px' }}>        B      </div>
         <div style={{ backgroundColor: '#FFFFFF', width: '24px', margin: '4px 4px 4px 4px' }}>        W      </div>
         <div style={{ backgroundColor: '#000000', color: '#FFFFFF', width: '24px', margin: '4px 4px 4px 4px' }}>        K      </div>
-      </div>
+      </div> */}
     </StyledControlPane>
   )
 }
@@ -62,6 +61,7 @@ const RgbSliders = (props) => {
           }>
           RGB
         </button>
+        
       </div>
       <SliderContainer {...props}
         symbol={'R'}
@@ -161,14 +161,14 @@ const HslSliders = (props) => {
 
 
 const SliderContainer = (props) => {
-  const [value, setValue] = useState(props.value)
+  const [, setValue] = useState(props.value)
 
   const handleChange = (event) => {
     setValue(event.target.value);
     props.onChange(event)
   }
 
-  const isActive = props.mainElement == props.symbol && props.shape == props.panelShape
+  const isActive = props.mainElement === props.symbol && props.shape === props.panelShape
 
   return (
 
@@ -214,7 +214,7 @@ const StyledControlPane = styled.div`
     .controlPanel{
       background-color: white;
       border-radius: 12px;
-      opacity: 0.7;
+      opacity: 1.0;
       margin-top:8px;
     }
 
