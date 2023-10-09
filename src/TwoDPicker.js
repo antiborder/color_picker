@@ -105,6 +105,7 @@ const RgbColorElement = (props) => {
               colors['R'] :
               '#' + convert.rgb.hex([255 - i * 4, j * 4, focusB])
         )
+      default:
     }
   }
 
@@ -125,6 +126,7 @@ const RgbColorElement = (props) => {
         r = 255 - i * 4
         g = j * 4
         break;
+      default:
     }
     props.handleClick(r, g, b)
   }
@@ -139,6 +141,7 @@ const RgbColorElement = (props) => {
 }
 
 const HsvColorElement = (props) => {
+
   const getHsvElementColor = (mainElement, i, j, focusH, focusHsvS, focusV) => {
     let isOnVerticalLine = false
     let isOnHorizontalLine = false
@@ -180,8 +183,8 @@ const HsvColorElement = (props) => {
               isOnCircleLine ?
                 colors['W'] :
                 '#' + convert.hsv.hex([angle * 360 / (2 * Math.PI), radius * 100 / 32, focusV])
-
         )
+      default:
     }
   }
 
@@ -204,6 +207,7 @@ const HsvColorElement = (props) => {
         h = angle * 360 / (2 * Math.PI)
         hsvS = radius * 100 / 32
         break;
+      default:
     }
     let [r, g, b] = convert.hsv.rgb([h, hsvS, v])
     props.handleClick(r, g, b)
@@ -263,6 +267,7 @@ const HslColorElement = (props) => {
                 '#' + convert.hsl.hex([angle * 360 / (2 * Math.PI), radius * 100 / 32, focusL])
 
         )
+      default:
     }
   }
 
@@ -285,6 +290,7 @@ const HslColorElement = (props) => {
         h = angle * 360 / (2 * Math.PI)
         s = radius * 100 / 32
         break;
+      default:
     }
     let [r, g, b] = convert.hsl.rgb([h, s, l])
     props.handleClick(r, g, b)
@@ -298,7 +304,7 @@ const HslColorElement = (props) => {
     />
   )
 }
-    
+
 const ColorElement = (props) => {
   const [isHovered, setIsHovered] = useState(false)
   return (

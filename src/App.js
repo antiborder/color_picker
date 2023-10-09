@@ -6,10 +6,10 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//ホバーしたらバブルが出る。バブルから色情報を表示。色を選択できる。
-//focusのアイコンの移動をスムーズに。遅れないように。
 //カラーコードを入力できるように。
+//focusのアイコンの移動をスムーズに。遅れないように。
 //座標軸
+//カラーコードをコピー
 //色とshapeとmainElementの初期値はランダムで。
 //Focusの残像が残る。
 //色の明るさ調整
@@ -125,6 +125,7 @@ function App() {
   const handleLabel = () => {
     setIsLabelShown(isLabelShown ? false : true);
   };
+
   const handleShapeClick = (shape) => {
     switch (shape) {
       case 'RGB':
@@ -134,7 +135,7 @@ function App() {
       case 'HSV':
         setShape('HSV'); break;
       default:
-        setShape('RGB'); break;    
+        setShape('RGB'); break;
     }
   };
 
@@ -143,7 +144,7 @@ function App() {
       <Structure
         shape={shape}
         isLabelShown={isLabelShown}
-        onClick={handleClick}
+        onParticleClick={handleClick}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
