@@ -10,7 +10,7 @@ const Focus = (props) => {
 
     const ref = useRef()
     useFrame(() => {
-        ref.current.rotation.z += 0.1;
+        ref.current.rotation.z += 0.02;
     });
     return (
         <>
