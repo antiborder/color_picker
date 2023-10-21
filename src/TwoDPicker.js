@@ -56,8 +56,8 @@ const StyledTwoDPicker = styled.div`
 position:relative;
  .colorSquare{
   border: 1px solid #000000;
-    width:300px;
-    height:300px;
+    width:320px;
+    height:320px;
     .colorRow{
       display:flex;
       flex-direction:row;
