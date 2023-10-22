@@ -37,8 +37,6 @@ const Particles = (props) => {
                                     shape={props.shape}
                                     emissive={new THREE.Color('#000000')}
                                     division={division}
-                                    // isAnyHovered={isAnyHovered}
-                                    // setIsAnyHovered={setIsAnyHovered}
                                 />
                             )
                         )
@@ -75,33 +73,18 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
     });
 
     const handlePointerOver = () => {
-        // if (!props.isAnyHovered) {
             setHovered(true)
-            // props.setIsAnyHovered(true)
-        // }
     }
-
     const handlePointerOut = () => {
-        // if (hovered) {
             setHovered(false)
-        // }
-        // props.setIsAnyHovered(false)
     }
-
     const handleBubblePointerOver = () => {
-        // if (!props.isAnyHovered) {
             setBubbleHovered(true)
-
-        // }
-        // props.setIsAnyHovered(true)
     }
-
     const handleBubblePointerOut = () => {
-        // if (bubbleHovered) {
             setBubbleHovered(false)
-        // }
-        // props.setIsAnyHovered(false)
     }
+    
     return (
 
         <animated.mesh

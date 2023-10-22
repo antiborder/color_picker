@@ -6,8 +6,8 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//日本の伝統食とwebカラーを追加。
 //各要素の解説ツールチップ
+//日本の伝統食とwebカラーを追加。
 //色とshapeとmainElementの初期値はランダムで。
 //ballの色は既存の色を
 //hexの書式がおかしいときは禁止マークに。　
