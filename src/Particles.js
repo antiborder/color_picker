@@ -9,7 +9,7 @@ import './App.css';
 
 const Particles = (props) => {
 
-    const [isAnyHovered, setIsAnyHovered] = useState(false);
+    // const [isAnyHovered, setIsAnyHovered] = useState(false);
 
     const rRange = 255;
     const gRange = 255;
@@ -25,11 +25,11 @@ const Particles = (props) => {
                     [...Array(Math.floor(gRange / step) + 1)].map((_, j) => {
                         return (
                             [...Array(Math.floor(bRange / step) + 1)].map((_, k) =>
-                                <Particle 
+                                <Particle
                                     getRgbPosition={props.getRgbPosition}
                                     getHslPosition={props.getHslPosition}
                                     getHsvPosition={props.getHsvPosition}
-                                    onParticleClick={() =>props.onParticleClick(i*step, j*step, k*step)}
+                                    onParticleClick={() => props.onParticleClick(i * step, j * step, k * step)}
                                     key={[i, j, k]}
                                     r={i * step}
                                     g={j * step}
@@ -38,6 +38,7 @@ const Particles = (props) => {
                                     emissive={new THREE.Color('#000000')}
                                     division={division}
                                     // isAnyHovered={isAnyHovered}
+                                    // setIsAnyHovered={setIsAnyHovered}
                                 />
                             )
                         )
@@ -59,7 +60,7 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
             position: [0, 0, 0]
         },
         to: {
-            position: props.shape === 'RGB' ?
+            position: props.shape === 'RGB' || props.shape === 'CMYK' ?
                 props.getRgbPosition(props.r, props.g, props.b) :
                 props.shape === 'HSL' ?
                     props.getHslPosition(props.r, props.g, props.b) :
@@ -74,27 +75,32 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
     });
 
     const handlePointerOver = () => {
-        if (!props.isAnyHovered) {
+        // if (!props.isAnyHovered) {
             setHovered(true)
-        }
+            // props.setIsAnyHovered(true)
+        // }
     }
 
     const handlePointerOut = () => {
-        if (hovered) {
+        // if (hovered) {
             setHovered(false)
-        }
+        // }
+        // props.setIsAnyHovered(false)
     }
 
     const handleBubblePointerOver = () => {
-        if (!props.isAnyHovered) {
+        // if (!props.isAnyHovered) {
             setBubbleHovered(true)
-        }
+
+        // }
+        // props.setIsAnyHovered(true)
     }
 
     const handleBubblePointerOut = () => {
-        if (bubbleHovered) {
+        // if (bubbleHovered) {
             setBubbleHovered(false)
-        }
+        // }
+        // props.setIsAnyHovered(false)
     }
     return (
 
@@ -119,13 +125,13 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
                     onPointerOver={() => handleBubblePointerOver()}
                     onPointerOut={() => handleBubblePointerOut()}
                 >
-                    {(hovered || bubbleHovered) &&
-                        <ParticleBubble 
-                        {...props}
+                    {((hovered || bubbleHovered)) &&
+                        <ParticleBubble
+                            {...props}
                             type={props.shape}
                             backgroundColor={color}
                             textColor={color}
-                            onClick={ props.onClick }
+                            onClick={props.onClick}
                         />
                     }
                 </div>
@@ -144,9 +150,9 @@ const ParticleBubble = (props) => {
                 {"#" + convert.rgb.hex(props.r, props.g, props.b)}
             </div>
             <div
-                class='colorRectangle'
+                className='colorRectangle'
                 onClick={props.onParticleClick}
-                style={{backgroundColor: "#" + convert.rgb.hex(props.r, props.g, props.b)}}
+                style={{ backgroundColor: "#" + convert.rgb.hex(props.r, props.g, props.b) }}
             />
             <div onClick={props.onParticleClick}>
                 <span className='modalLink'>
