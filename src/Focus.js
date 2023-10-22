@@ -16,7 +16,7 @@ const Focus = (props) => {
         <>
             <group
                 position={
-                    props.shape === 'RGB' ?
+                    props.shape === 'RGB' || props.shape === 'CMYK' ?
                         props.getRgbPosition(props.focusR, props.focusG, props.focusB) :
                         props.shape === 'HSL' ?
                             props.getHslPosition(props.focusR, props.focusG, props.focusB) :

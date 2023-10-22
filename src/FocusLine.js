@@ -9,7 +9,7 @@ const FocusLine = (props) => {
     const [rescaledH, rescaledS, rescaledL] = props.rescaleHsl(props.focusH, props.focusS, props.focusL)
     const rescaledHsvS = props.rescaleHsl(props.focusH, props.focusHsvS, props.focusV)[1]
     const rescaledV = props.rescaleHsl(props.focusH, props.focusHsvS, props.focusV)[2]
-
+    // console.log(props.cmykMainElement)
 
     return (
         <>
@@ -59,6 +59,51 @@ const FocusLine = (props) => {
 
                 </>
             )}
+            {props.shape === 'CMYK' && (
+                <>
+                    {props.cmykMainElement !== 'C' && (
+                        <StraightLine
+                            points={[
+                                props.getRgbPosition(0, props.focusG, props.focusB),
+                                props.getRgbPosition(255, props.focusG, props.focusB)
+                            ]}
+                            color={
+                                colors[
+                                    props.cmykMainElement === 'M'?'Y':'M'
+                                ]
+                            }
+                        />
+                    )}
+                    {props.cmykMainElement !== 'M' && (
+                        <StraightLine
+                            points={[
+                                props.getRgbPosition(props.focusR, 0, props.focusB),
+                                props.getRgbPosition(props.focusR, 255, props.focusB)
+                            ]}
+                            color={
+                                colors[
+                                    props.cmykMainElement === 'Y'?'C':'Y'
+                                ]
+                            }
+                        />
+                    )}
+                    {props.cmykMainElement !== 'Y' && (
+                        <StraightLine
+                            points={[
+                                props.getRgbPosition(props.focusR, props.focusG, 0),
+                                props.getRgbPosition(props.focusR, props.focusG, 255)
+                            ]}
+                            color={
+                                colors[
+                                    props.cmykMainElement === 'C'?'M':'C'
+                                ]
+                            }
+                        />
+                    )}
+                </>
+            )}
+
+
             {props.shape === 'HSL' && (
                 <>
                     {props.hslMainElement !== 'H' && (

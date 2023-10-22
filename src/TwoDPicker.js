@@ -22,7 +22,15 @@ const TwoDPicker = (props) => {
                         <RgbColorElement {...props}
                           i={i} j={j}
                         />)
+                        
                       ||
+
+                      (props.shape === 'CMYK' &&
+                      <CmykColorElement {...props}
+                        i={i} j={j}
+                      />)
+                    ||
+
                       (
                         props.shape === 'HSV' &&
                         <HsvColorElement {...props}
@@ -135,6 +143,77 @@ const RgbColorElement = (props) => {
     <ColorElement
       {...props}
       getElementColor={getRgbElementColor(props.rgbMainElement, props.i, props.j, props.focusR, props.focusG, props.focusB)}
+      onClick={() => { handleClick(props.i, props.j) }}
+    />
+  )
+}
+
+const CmykColorElement = (props) => {
+  const getCmykElementColor = (mainElement, i, j, focusR, focusG, focusB) => {
+    let isOnVerticalLine = false
+    let isOnHorizontalLine = false
+
+    switch (mainElement) {
+      case 'C':
+        isOnVerticalLine = (j * 4 >= focusB - 3) && (j * 4 < Math.round(focusB) + 1)
+        isOnHorizontalLine = (255 - i * 4 >= focusG) && (255 - i * 4 < Math.round(focusG) + 4)
+        return (
+          isOnVerticalLine ?
+            colors['Y'] :
+            isOnHorizontalLine ?
+              colors['M'] :
+              '#' + convert.rgb.hex([focusR, 255 - i * 4, j * 4])
+        )
+      case 'M':
+        isOnVerticalLine = (j * 4 >= focusR - 3) && (j * 4 < Math.round(focusR) + 1)
+        isOnHorizontalLine = (255 - i * 4 >= focusB) && (255 - i * 4 < Math.round(focusB) + 4)
+        return (
+          isOnVerticalLine ?
+            colors['C'] :
+            isOnHorizontalLine ?
+              colors['Y'] :
+              '#' + convert.rgb.hex([j * 4, focusG, 255 - i * 4])
+        )
+      case 'Y':
+        isOnVerticalLine = (j * 4 >= focusG - 3) && (j * 4 < Math.round(focusG) + 1)
+        isOnHorizontalLine = (255 - i * 4 >= focusR) && (255 - i * 4 < Math.round(focusR) + 4)
+        return (
+          isOnVerticalLine ?
+            colors['M'] :
+            isOnHorizontalLine ?
+              colors['C'] :
+              '#' + convert.rgb.hex([255 - i * 4, j * 4, focusB])
+        )
+      default:
+    }
+  }
+
+  const handleClick = (i, j) => {
+    let r = props.focusR
+    let g = props.focusG
+    let b = props.focusB
+    switch (props.cmykMainElement) {
+      case 'C':
+        g = 255 - i * 4
+        b = j * 4
+        break;
+      case 'M':
+        b = 255 - i * 4
+        r = j * 4
+        break;
+      case 'Y':
+        r = 255 - i * 4
+        g = j * 4
+        break;
+      default:
+    }
+    props.handleClick(r, g, b)
+  }
+
+  return (
+    <ColorElement
+      {...props}
+      getElementColor={getCmykElementColor(props.cmykMainElement, props.i, props.j, props.focusR, props.focusG, props.focusB)}
       onClick={() => { handleClick(props.i, props.j) }}
     />
   )
