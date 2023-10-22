@@ -35,21 +35,42 @@ const FocusPlane = (props) => {
 
     return (
         <>
-            {props.shape === 'RGB' && (<>
+            {props.shape==='RGB' && (<>
                 {
-                    props.rgbMainElement == 'R' &&
+                    props.rgbMainElement === 'R' &&
                     <Quadrilateral {...props}
                         points={rSquareCorners}
                     />
                 }
                 {
-                    props.rgbMainElement == 'G' &&
+                    props.rgbMainElement === 'G' &&
                     <Quadrilateral {...props}
                         points={gSquareCorners}
                     />
                 }
                 {
-                    props.rgbMainElement == 'B' &&
+                    props.rgbMainElement === 'B' &&
+                    <Quadrilateral {...props}
+                        points={bSquareCorners}
+                    />
+                }
+            </>)
+            }
+            {props.shape==='CMYK' && (<>
+                {
+                    props.cmykMainElement === 'C' &&
+                    <Quadrilateral {...props}
+                        points={rSquareCorners}
+                    />
+                }
+                {
+                    props.cmykMainElement === 'M' &&
+                    <Quadrilateral {...props}
+                        points={gSquareCorners}
+                    />
+                }
+                {
+                    props.cmykMainElement === 'Y' &&
                     <Quadrilateral {...props}
                         points={bSquareCorners}
                     />

@@ -6,12 +6,13 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//ホバーしたらバブルが出る。バブルから色情報を表示。色を選択できる。
-//focusのアイコンの移動をスムーズに。遅れないように。
-//カラーコードを入力できるように。
-//座標軸
+//日本の伝統食とwebカラーを追加。
+//各要素の解説ツールチップ
 //色とshapeとmainElementの初期値はランダムで。
-//Focusの残像が残る。
+//ballの色は既存の色を
+//hexの書式がおかしいときは禁止マークに。　
+//座標軸
+//カラーコードをコピー
 //色の明るさ調整
 //表示近さ調整
 //RGBとHSLとHSVの解説
@@ -22,11 +23,15 @@ function App() {
 
   const [shape, setShape] = useState('RGB')
   const [isLabelShown, setIsLabelShown] = useState(false)
-  const [, setLastChanged] = useState('R')
 
   const [focusR, setFocusR] = useState(255)
   const [focusG, setFocusG] = useState(255)
   const [focusB, setFocusB] = useState(255)
+
+  const [focusC, setFocusC] = useState(0)
+  const [focusM, setFocusM] = useState(0)
+  const [focusY, setFocusY] = useState(0)
+  const [focusK, setFocusK] = useState(0)
 
   const [focusH, setFocusH] = useState(0)
   const [focusS, setFocusS] = useState(100)
@@ -36,78 +41,160 @@ function App() {
   const [focusV, setFocusV] = useState(100)
 
   const [rgbMainElement, setRgbMainElement] = useState('R')
+  const [cmykMainElement, setCmykMainElement] = useState('C')
   const [hslMainElement, setHslMainElement] = useState('H')
   const [hsvMainElement, setHsvMainElement] = useState('H')
 
+  const [hexInput, setHexInput] = useState('FFFFFF')
+
   const handleRgbChange = (event, colorParam) => {
-    setLastChanged(colorParam);
+    let [r, g, b] = [focusR, focusG, focusB]
     switch (colorParam) {
       case 'R':
-        setFocusR(event.target.value); break;
+        r = event.target.value
+        setFocusR(r);
+        break;
       case 'G':
-        setFocusG(event.target.value); break;
+        g = event.target.value
+        setFocusG(g);
+        break;
       case 'B':
-        setFocusB(event.target.value); break;
+        b = event.target.value
+        setFocusB(b);
+        break;
       default:
+        r = event.target.value
         setFocusR(event.target.value); break;
     }
-    setFocusH(convert.rgb.hsl([focusR, focusG, focusB])[0]);
-    setFocusS(convert.rgb.hsl([focusR, focusG, focusB])[1]);
-    setFocusL(convert.rgb.hsl([focusR, focusG, focusB])[2]);
+
+    setFocusC(convert.rgb.cmyk([r, g, b])[0]);
+    setFocusM(convert.rgb.cmyk([r, g, b])[1]);
+    setFocusY(convert.rgb.cmyk([r, g, b])[2]);
+    setFocusK(convert.rgb.cmyk([r, g, b])[3]);
+
+    setFocusH(convert.rgb.hsl([r, g, b])[0]);
+    setFocusS(convert.rgb.hsl([r, g, b])[1]);
+    setFocusL(convert.rgb.hsl([r, g, b])[2]);
+
+    setFocusHsvS(convert.rgb.hsv([r, g, b])[1]);
+    setFocusV(convert.rgb.hsv([r, g, b])[2]);
+
+    setHexInput(convert.rgb.hex([r, g, b]))
+  }
+
+  const handleCmykChange = (event, colorParam) => {
+    let [c, m, y, k] = [focusC, focusM, focusY, focusK]
+    switch (colorParam) {
+      case 'C':
+        c = event.target.value
+        setFocusC(c);
+        break;
+      case 'M':
+        m = event.target.value
+        setFocusM(m);
+        break;
+      case 'Y':
+        y = event.target.value
+        setFocusY(y);
+        break;
+      case 'K':
+      default:
+        k = event.target.value
+        setFocusK(k);
+        break;
+    }
+    setFocusR(convert.cmyk.rgb([c, m, y, k])[0]);
+    setFocusG(convert.cmyk.rgb([c, m, y, k])[1]);
+    setFocusB(convert.cmyk.rgb([c, m, y, k])[2]);
+
+    setFocusH(convert.cmyk.hsl([c, m, y, k])[0]);
+    setFocusS(convert.cmyk.hsl([c, m, y, k])[1]);
+    setFocusL(convert.cmyk.hsl([c, m, y, k])[2]);
     //RGBからHSVに変換
-    setFocusHsvS(convert.rgb.hsv([focusR, focusG, focusB])[1]);
-    setFocusV(convert.rgb.hsv([focusR, focusG, focusB])[2]);
+    setFocusHsvS(convert.cmyk.hsv([c, m, y, k])[1]);
+    setFocusV(convert.cmyk.hsv([c, m, y, k])[2]);
+
+    setHexInput(convert.cmyk.hex([c, m, y, k]))
   }
 
   const handleHslChange = (event, colorParam) => {
+    let [h, s, l] = [focusH, focusS, focusL]
     switch (colorParam) {
       case 'H':
-        setFocusH(event.target.value); break;
-      case 'S':
-        setFocusS(event.target.value); break;
-      case 'L':
-        setFocusL(event.target.value); break;
-      default:
-        setFocusH(event.target.value); break;
-    }
-    setFocusR(convert.hsl.rgb([focusH, focusS, focusL])[0]);
-    setFocusG(convert.hsl.rgb([focusH, focusS, focusL])[1]);
-    setFocusB(convert.hsl.rgb([focusH, focusS, focusL])[2]);
-    //HSLからHSVに変換
-    setFocusHsvS(convert.hsl.hsv([focusH, focusS, focusL])[1]);
-    setFocusV(convert.hsl.hsv([focusH, focusS, focusL])[2]);
+        setFocusH(event.target.value);
+        h = event.target.value
+        break;
 
+      case 'S':
+        setFocusS(event.target.value);
+        s = event.target.value
+        break;
+      case 'L':
+      default:
+        setFocusL(event.target.value);
+        l = event.target.value
+    }
+    setFocusR(convert.hsl.rgb([h, s, l])[0]);
+    setFocusG(convert.hsl.rgb([h, s, l])[1]);
+    setFocusB(convert.hsl.rgb([h, s, l])[2]);
+
+    setFocusC(convert.hsl.cmyk([h, s, l])[0]);
+    setFocusM(convert.hsl.cmyk([h, s, l])[1]);
+    setFocusY(convert.hsl.cmyk([h, s, l])[2]);
+    setFocusK(convert.hsl.cmyk([h, s, l])[3]);
+
+    setFocusHsvS(convert.hsl.hsv([h, s, l])[1]);
+    setFocusV(convert.hsl.hsv([h, s, l])[2]);
+
+    setHexInput(convert.hsl.hex([h, s, l]))
   }
 
   const handleHsvChange = (event, colorParam) => {
+    let [h, s, v] = [focusH, focusHsvS, focusV]
     switch (colorParam) {
       case 'H':
-        setFocusH(event.target.value); break;
+        setFocusH(event.target.value);
+        h = event.target.value
+        break;
       case 'HsvS':
-        setFocusHsvS(event.target.value); break;
+        setFocusHsvS(event.target.value);
+        s = event.target.value
+        break;
       case 'V':
-        setFocusV(event.target.value); break;
       default:
-        setFocusH(event.target.value); break;
+        setFocusV(event.target.value);
+        v = event.target.value
+        break;
     }
-    //HSVからRGBに変換
-    setFocusR(convert.hsv.rgb([focusH, focusHsvS, focusV])[0]);
-    setFocusG(convert.hsv.rgb([focusH, focusHsvS, focusV])[1]);
-    setFocusB(convert.hsv.rgb([focusH, focusHsvS, focusV])[2]);
-    //HSVからHSLに変換
-    setFocusS(convert.hsv.hsl([focusH, focusHsvS, focusV])[1]);
-    setFocusL(convert.hsv.hsl([focusH, focusHsvS, focusV])[2]);
+    setFocusR(convert.hsv.rgb([h, s, v])[0]);
+    setFocusG(convert.hsv.rgb([h, s, v])[1]);
+    setFocusB(convert.hsv.rgb([h, s, v])[2]);
+
+    setFocusC(convert.hsv.cmyk([h, s, v])[0]);
+    setFocusM(convert.hsv.cmyk([h, s, v])[1]);
+    setFocusY(convert.hsv.cmyk([h, s, v])[2]);
+    setFocusK(convert.hsv.cmyk([h, s, v])[3]);
+
+    setFocusS(convert.hsv.hsl([h, s, v])[1]);
+    setFocusL(convert.hsv.hsl([h, s, v])[2]);
+
+    setHexInput(convert.hsv.hex([h, s, v]))
   }
 
   const handleClick = (r, g, b) => {
     setFocusR(r)
     setFocusG(g)
     setFocusB(b)
+    setFocusC(convert.rgb.cmyk([r, g, b])[0])
+    setFocusM(convert.rgb.cmyk([r, g, b])[1])
+    setFocusY(convert.rgb.cmyk([r, g, b])[2])
+    setFocusK(convert.rgb.cmyk([r, g, b])[3])
     setFocusH(convert.rgb.hsl([r, g, b])[0])
     setFocusS(convert.rgb.hsl([r, g, b])[1])
     setFocusL(convert.rgb.hsl([r, g, b])[2])
     setFocusHsvS(convert.rgb.hsv([r, g, b])[1]);
     setFocusV(convert.rgb.hsv([r, g, b])[2]);
+    setHexInput(convert.rgb.hex([r, g, b]))
   }
 
   const handleHsvElementClick = (h, s, v) => {
@@ -120,39 +207,70 @@ function App() {
     setFocusH(convert.hsv.hsl([h, s, v])[0])
     setFocusS(convert.hsv.hsl([h, s, v])[1])
     setFocusL(convert.hsv.hsl([h, s, v])[2])
+    setHexInput(convert.hsv.hex([h, s, v]))
   }
 
   const handleLabel = () => {
     setIsLabelShown(isLabelShown ? false : true);
   };
+
   const handleShapeClick = (shape) => {
     switch (shape) {
       case 'RGB':
         setShape('RGB'); break;
+      case 'CMYK':
+        setShape('CMYK'); break;
       case 'HSL':
         setShape('HSL'); break;
       case 'HSV':
-        setShape('HSV'); break;
       default:
-        setShape('RGB'); break;    
+        setShape('HSV'); break;
     }
   };
+
+  const handleHexUpdate = () => {
+    setFocusR(convert.hex.rgb(hexInput)[0])
+    setFocusG(convert.hex.rgb(hexInput)[1])
+    setFocusB(convert.hex.rgb(hexInput)[2])
+
+    setFocusC(convert.hex.cmyk(hexInput)[0])
+    setFocusM(convert.hex.cmyk(hexInput)[1])
+    setFocusY(convert.hex.cmyk(hexInput)[2])
+    setFocusK(convert.hex.cmyk(hexInput)[3])
+
+    setFocusH(convert.hex.hsl(hexInput)[0])
+    setFocusS(convert.hex.hsl(hexInput)[1])
+    setFocusL(convert.hex.hsl(hexInput)[2])
+
+    setFocusHsvS(convert.hex.hsv(hexInput)[1])
+    setFocusV(convert.hex.hsv(hexInput)[2])
+  }
 
   return (
     <>
       <Structure
         shape={shape}
         isLabelShown={isLabelShown}
-        onClick={handleClick}
+        onParticleClick={handleClick}
+
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
+
+        focusC={focusC}
+        focusM={focusM}
+        focusY={focusY}
+        focusK={focusK}
+
         focusH={focusH}
         focusS={focusS}
         focusL={focusL}
+
         focusHsvS={focusHsvS}
         focusV={focusV}
+
         rgbMainElement={rgbMainElement}
+        cmykMainElement={cmykMainElement}
         hslMainElement={hslMainElement}
         hsvMainElement={hsvMainElement}
       />
@@ -161,12 +279,19 @@ function App() {
         handleClick={handleClick}
         handleHsvElementClick={handleHsvElementClick}
         onShapeClick={handleShapeClick}
+
         onRgbChange={handleRgbChange}
+        onCmykChange={handleCmykChange}
         onHslChange={handleHslChange}
         onHsvChange={handleHsvChange}
+
         setRgbMainElement={(symbol) => {
           setShape('RGB');
           setRgbMainElement(symbol);
+        }}
+        setCmykMainElement={(symbol) => {
+          setShape('CMYK');
+          setCmykMainElement(symbol);
         }}
         setHslMainElement={(symbol) => {
           setShape('HSL');
@@ -176,21 +301,32 @@ function App() {
           setShape('HSV');
           setHsvMainElement(symbol);
         }}
+
         shape={shape}
         focusR={focusR}
         focusG={focusG}
         focusB={focusB}
+        focusC={focusC}
+        focusM={focusM}
+        focusY={focusY}
+        focusK={focusK}
         focusH={focusH}
         focusS={focusS}
         focusL={focusL}
         focusHsvS={focusHsvS}
         focusV={focusV}
+
         rgbMainElement={rgbMainElement}
         hslMainElement={hslMainElement}
         hsvMainElement={hsvMainElement}
+        cmykMainElement={cmykMainElement}
+
         setFocusR={setFocusR}
         setFocusG={setFocusG}
         setFocusB={setFocusB}
+        hexInput={hexInput}
+        setHexInput={setHexInput}
+        onHexUpdate={handleHexUpdate}
 
       />
     </>
