@@ -6,11 +6,15 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//日本の伝統食とwebカラーを追加。
-//各要素の解説ツールチップ
+//github pages
+//focusPlaneはon offできるように
+//輪郭線を描画
+//表示タグをチェックボックスで選択
 //色とshapeとmainElementの初期値はランダムで。
-//ballの色は既存の色を
-//hexの書式がおかしいときは禁止マークに。　
+//色bubbleのスタイル・フォント変更
+//色名で検索できるように
+//フレックス対応と全体のサイズ
+//2Dpickerをキャンバスに
 //座標軸
 //カラーコードをコピー
 //色の明るさ調整

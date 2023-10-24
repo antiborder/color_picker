@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 import styled from 'styled-components';
 import convert from 'color-convert';
-import { colors } from './constants/colors'
+import { systemColors } from './constants/systemColors'
 
 const TwoDPicker = (props) => {
 
@@ -11,7 +11,7 @@ const TwoDPicker = (props) => {
 
     <StyledTwoDPicker>
       <div className='controlPanel' style={{ padding: '10px' }}>
-        <div className='colorSquare'>
+        <div className='systemColorsquare'>
           <>
             {Array.from({ length: 64 }, (_, index) => index).map((i) =>
               <><div className='colorRow'>
@@ -62,7 +62,7 @@ export default TwoDPicker;
 
 const StyledTwoDPicker = styled.div`
 position:relative;
- .colorSquare{
+ .systemColorsquare{
   border: 1px solid #000000;
     width:320px;
     height:320px;
@@ -88,9 +88,9 @@ const RgbColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusG) && (255 - i * 4 < Math.round(focusG) + 4)
         return (
           isOnVerticalLine ?
-            colors['B'] :
+            systemColors['B'] :
             isOnHorizontalLine ?
-              colors['G'] :
+              systemColors['G'] :
               '#' + convert.rgb.hex([focusR, 255 - i * 4, j * 4])
         )
       case 'G':
@@ -98,9 +98,9 @@ const RgbColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusB) && (255 - i * 4 < Math.round(focusB) + 4)
         return (
           isOnVerticalLine ?
-            colors['R'] :
+            systemColors['R'] :
             isOnHorizontalLine ?
-              colors['B'] :
+              systemColors['B'] :
               '#' + convert.rgb.hex([j * 4, focusG, 255 - i * 4])
         )
       case 'B':
@@ -108,9 +108,9 @@ const RgbColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusR) && (255 - i * 4 < Math.round(focusR) + 4)
         return (
           isOnVerticalLine ?
-            colors['G'] :
+            systemColors['G'] :
             isOnHorizontalLine ?
-              colors['R'] :
+              systemColors['R'] :
               '#' + convert.rgb.hex([255 - i * 4, j * 4, focusB])
         )
       default:
@@ -159,9 +159,9 @@ const CmykColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusG) && (255 - i * 4 < Math.round(focusG) + 4)
         return (
           isOnVerticalLine ?
-            colors['Y'] :
+            systemColors['Y'] :
             isOnHorizontalLine ?
-              colors['M'] :
+              systemColors['M'] :
               '#' + convert.rgb.hex([focusR, 255 - i * 4, j * 4])
         )
       case 'M':
@@ -169,9 +169,9 @@ const CmykColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusB) && (255 - i * 4 < Math.round(focusB) + 4)
         return (
           isOnVerticalLine ?
-            colors['C'] :
+            systemColors['C'] :
             isOnHorizontalLine ?
-              colors['Y'] :
+              systemColors['Y'] :
               '#' + convert.rgb.hex([j * 4, focusG, 255 - i * 4])
         )
       case 'Y':
@@ -179,9 +179,9 @@ const CmykColorElement = (props) => {
         isOnHorizontalLine = (255 - i * 4 >= focusR) && (255 - i * 4 < Math.round(focusR) + 4)
         return (
           isOnVerticalLine ?
-            colors['M'] :
+            systemColors['M'] :
             isOnHorizontalLine ?
-              colors['C'] :
+              systemColors['C'] :
               '#' + convert.rgb.hex([255 - i * 4, j * 4, focusB])
         )
       default:
@@ -230,9 +230,9 @@ const HsvColorElement = (props) => {
         isOnHorizontalLine = (100 - i * 100 / 64 >= focusV) && (100 - i * 100 / 64 < Math.round(focusV) + 1.6)
         return (
           isOnVerticalLine ?
-            colors['K'] :
+            systemColors['K'] :
             isOnHorizontalLine ?
-              colors['K'] :
+              systemColors['K'] :
               '#' + convert.hsv.hex([focusH, j * 100 / 64, 100 - i * 100 / 64])
         )
       case 'S':
@@ -240,9 +240,9 @@ const HsvColorElement = (props) => {
         isOnHorizontalLine = (100 - i * 100 / 64 >= focusV) && (100 - i * 100 / 64 < Math.round(focusV) + 1.6)
         return (
           isOnVerticalLine ?
-            colors['K'] :
+            systemColors['K'] :
             isOnHorizontalLine ?
-              colors['W'] :
+              systemColors['W'] :
               '#' + convert.hsv.hex([j * 360 / 64, focusHsvS, 100 - i * 100 / 64])
         )
       case 'V':
@@ -256,11 +256,11 @@ const HsvColorElement = (props) => {
           radius * 100 / 32 < Math.round(focusHsvS) + 1.1
         return (
           radius > 32.05 ?
-            colors['W'] :
+            systemColors['W'] :
             isOnRadialLine && !(x === 0 && y === 0) ?
-              colors['K'] :
+              systemColors['K'] :
               isOnCircleLine ?
-                colors['W'] :
+                systemColors['W'] :
                 '#' + convert.hsv.hex([angle * 360 / (2 * Math.PI), radius * 100 / 32, focusV])
         )
       default:
@@ -312,9 +312,9 @@ const HslColorElement = (props) => {
         isOnHorizontalLine = (100 - i * 100 / 64 >= focusL) && (100 - i * 100 / 64 < Math.round(focusL) + 1.6)
         return (
           isOnVerticalLine ?
-            colors['K'] :
+            systemColors['K'] :
             isOnHorizontalLine ?
-              colors['K'] :
+              systemColors['K'] :
               '#' + convert.hsl.hex([focusH, j * 100 / 64, 100 - i * 100 / 64])
         )
       case 'S':
@@ -322,9 +322,9 @@ const HslColorElement = (props) => {
         isOnHorizontalLine = (100 - i * 100 / 64 >= focusL) && (100 - i * 100 / 64 < Math.round(focusL) + 1.6)
         return (
           isOnVerticalLine ?
-            colors['K'] :
+            systemColors['K'] :
             isOnHorizontalLine ?
-              colors['W'] :
+              systemColors['W'] :
               '#' + convert.hsl.hex([j * 360 / 64, focusS, 100 - i * 100 / 64])
         )
       case 'L':
@@ -338,11 +338,11 @@ const HslColorElement = (props) => {
           radius * 100 / 32 < Math.round(focusS) + 1.4
         return (
           radius > 32.05 ?
-            colors['W'] :
+            systemColors['W'] :
             isOnRadialLine && !(x === 0 && y === 0) ?
-              colors['K'] :
+              systemColors['K'] :
               isOnCircleLine ?
-                colors['W'] :
+                systemColors['W'] :
                 '#' + convert.hsl.hex([angle * 360 / (2 * Math.PI), radius * 100 / 32, focusL])
 
         )
