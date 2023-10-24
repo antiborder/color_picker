@@ -1,7 +1,7 @@
 import React from 'react'
 import StraightLine from './StraightLine'
 import Circle from './Circle'
-import {colors} from './constants/colors'
+import {systemColors} from './constants/systemColors'
 
 
 const FocusLine = (props) => {
@@ -22,7 +22,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(255, props.focusG, props.focusB)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.rgbMainElement === 'G'?'B':'G'
                                 ]
                             }
@@ -36,7 +36,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(props.focusR, 255, props.focusB)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.rgbMainElement === 'B'?'R':'B'
                                 ]
                             }
@@ -50,7 +50,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(props.focusR, props.focusG, 255)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.rgbMainElement === 'R'?'G':'R'
                                 ]
                             }
@@ -68,7 +68,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(255, props.focusG, props.focusB)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.cmykMainElement === 'M'?'Y':'M'
                                 ]
                             }
@@ -81,7 +81,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(props.focusR, 255, props.focusB)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.cmykMainElement === 'Y'?'C':'Y'
                                 ]
                             }
@@ -94,7 +94,7 @@ const FocusLine = (props) => {
                                 props.getRgbPosition(props.focusR, props.focusG, 255)
                             ]}
                             color={
-                                colors[
+                                systemColors[
                                     props.cmykMainElement === 'C'?'M':'C'
                                 ]
                             }
@@ -110,7 +110,7 @@ const FocusLine = (props) => {
                         <Circle
                             radius={rescaledS}
                             position={[0, 0, rescaledL]}
-                            color={colors["W"]}
+                            color={systemColors["W"]}
                         />
                     )}
 
@@ -128,7 +128,7 @@ const FocusLine = (props) => {
                                     rescaledL
                                 )
                             ]}
-                            color={colors['K']}
+                            color={systemColors['K']}
                         />
                     )}
 
@@ -146,7 +146,7 @@ const FocusLine = (props) => {
                                     props.cylinderHeight / 2
                                 )
                             ]}
-                            color={colors["DEEP_GRAY"]}
+                            color={systemColors["DEEP_GRAY"]}
                         />
                     )}
                 </>
@@ -157,7 +157,7 @@ const FocusLine = (props) => {
                         <Circle
                             radius={rescaledHsvS}
                             position={[0, 0, rescaledV]}
-                            color={colors["W"]}
+                            color={systemColors["W"]}
                         />
                     )}
 
@@ -175,7 +175,7 @@ const FocusLine = (props) => {
                                     rescaledV
                                 )
                             ]}
-                            color={colors["K"]}
+                            color={systemColors["K"]}
                         />
                     )}
 
@@ -194,7 +194,7 @@ const FocusLine = (props) => {
                                 )
 
                             ]}
-                            color={colors["DEEP_GRAY"]}
+                            color={systemColors["DEEP_GRAY"]}
                         />
                     )}
                 </>
