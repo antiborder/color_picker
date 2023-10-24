@@ -6,6 +6,7 @@ import convert from 'color-convert';
 import styled from 'styled-components';
 
 import './App.css';
+import sampleColors from './constants/sampleColors'
 
 const Particles = (props) => {
 
@@ -19,29 +20,49 @@ const Particles = (props) => {
     const step = 255 / division
 
     return (
+        // <>
+        //     {[...Array(Math.floor(rRange / step) + 1)].map((_, i) => {
+        //         return (
+        //             [...Array(Math.floor(gRange / step) + 1)].map((_, j) => {
+        //                 return (
+        //                     [...Array(Math.floor(bRange / step) + 1)].map((_, k) =>
+        //                         <Particle
+        //                             getRgbPosition={props.getRgbPosition}
+        //                             getHslPosition={props.getHslPosition}
+        //                             getHsvPosition={props.getHsvPosition}
+        //                             onParticleClick={() => props.onParticleClick(i * step, j * step, k * step)}
+        //                             key={[i, j, k]}
+        //                             r={i * step}
+        //                             g={j * step}
+        //                             b={k * step}
+        //                             shape={props.shape}
+        //                             emissive={new THREE.Color('#000000')}
+        //                             division={division}
+        //                         />
+        //                     )
+        //                 )
+        //             })
+        //         )
+        //     })}
+        // </>
         <>
-            {[...Array(Math.floor(rRange / step) + 1)].map((_, i) => {
-                return (
-                    [...Array(Math.floor(gRange / step) + 1)].map((_, j) => {
-                        return (
-                            [...Array(Math.floor(bRange / step) + 1)].map((_, k) =>
-                                <Particle
-                                    getRgbPosition={props.getRgbPosition}
-                                    getHslPosition={props.getHslPosition}
-                                    getHsvPosition={props.getHsvPosition}
-                                    onParticleClick={() => props.onParticleClick(i * step, j * step, k * step)}
-                                    key={[i, j, k]}
-                                    r={i * step}
-                                    g={j * step}
-                                    b={k * step}
-                                    shape={props.shape}
-                                    emissive={new THREE.Color('#000000')}
-                                    division={division}
-                                />
-                            )
-                        )
-                    })
-                )
+            {sampleColors.map((c, i) => {
+                console.log(c)
+                return <Particle
+                    getRgbPosition={props.getRgbPosition}
+                    getHslPosition={props.getHslPosition}
+                    getHsvPosition={props.getHsvPosition}
+                    onParticleClick={() => props.onParticleClick(...convert.hex.rgb(c.hex))}
+                    r={convert.hex.rgb(c.hex)[0]}
+                    g={convert.hex.rgb(c.hex)[1]}
+                    b={convert.hex.rgb(c.hex)[2]}
+                    name1={c.name1}
+                    name2={c.name2}
+                    name3={c.name3}
+                    shape={props.shape}
+                    emissive={new THREE.Color('#000000')}
+                    division={division}
+                />
             })}
         </>
     )
@@ -73,18 +94,18 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
     });
 
     const handlePointerOver = () => {
-            setHovered(true)
+        setHovered(true)
     }
     const handlePointerOut = () => {
-            setHovered(false)
+        setHovered(false)
     }
     const handleBubblePointerOver = () => {
-            setBubbleHovered(true)
+        setBubbleHovered(true)
     }
     const handleBubblePointerOut = () => {
-            setBubbleHovered(false)
+        setBubbleHovered(false)
     }
-    
+
     return (
 
         <animated.mesh
@@ -95,7 +116,7 @@ const Particle = ({ size = 0.4, radius = 0, color = '#000000', opacity = 1, ...p
             scale={scale}
             onClick={props.onParticleClick}
         >
-            <sphereGeometry attach="geometry" args={[0.2, 32, 32]} />
+            <sphereGeometry attach="geometry" args={[0.12, 32, 32]} />
             <meshStandardMaterial
                 attach="material"
                 color={color}
@@ -129,14 +150,16 @@ const ParticleBubble = (props) => {
 
     return (
         <StyledNodeBubble style={{}}>
-            <div style={{ textAlign: 'left' }}>
-                {"#" + convert.rgb.hex(props.r, props.g, props.b)}
+            <div style={{ textAlign: 'left', fontWeight:'bold' }}>
+            {props.name1}
             </div>
             <div
                 className='colorRectangle'
                 onClick={props.onParticleClick}
                 style={{ backgroundColor: "#" + convert.rgb.hex(props.r, props.g, props.b) }}
             />
+            {"#" + convert.rgb.hex(props.r, props.g, props.b)}<br/>
+            {props.name2}
             <div onClick={props.onParticleClick}>
                 <span className='modalLink'>
                     この色を選ぶ

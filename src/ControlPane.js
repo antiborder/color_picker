@@ -4,7 +4,7 @@ import convert from 'color-convert';
 import TwoDPicker from './TwoDPicker'
 
 import './App.css';
-import { colors } from './constants/colors.js'
+import { systemColors } from './constants/systemColors.js'
 import { SyncIcon } from './assets/Icons.js';
 
 const ControlPane = (props) => {
@@ -124,21 +124,21 @@ const RgbSliders = (props) => {
           symbol={'R'}
           value={props.focusR}
           max={255}
-          color={colors['R']}
+          color={systemColors['R']}
           onChange={(event) => props.onRgbChange(event, 'R')}
         />
         <SliderContainer {...props}
           symbol={'G'}
           value={props.focusG}
           max={255}
-          color={colors['G']}
+          color={systemColors['G']}
           onChange={(event) => props.onRgbChange(event, 'G')}
         />
         <SliderContainer {...props}
           symbol={'B'}
           value={props.focusB}
           max={255}
-          color={colors['B']}
+          color={systemColors['B']}
           onChange={(event) => props.onRgbChange(event, 'B')}
         />
       </>}
@@ -174,28 +174,28 @@ const CmykSliders = (props) => {
           symbol={'C'}
           value={props.focusC}
           max={100}
-          color={colors['C']}
+          color={systemColors['C']}
           onChange={(event) => props.onCmykChange(event, 'C')}
         />
         <SliderContainer {...props}
           symbol={'M'}
           value={props.focusM}
           max={100}
-          color={colors['M']}
+          color={systemColors['M']}
           onChange={(event) => props.onCmykChange(event, 'M')}
         />
         <SliderContainer {...props}
           symbol={'Y'}
           value={props.focusY}
           max={100}
-          color={colors['Y']}
+          color={systemColors['Y']}
           onChange={(event) => props.onCmykChange(event, 'Y')}
         />
         <SliderContainer {...props}
           symbol={'K'}
           value={props.focusK}
           max={100}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onCmykChange(event, 'K')}
         />
       </>}
@@ -231,21 +231,21 @@ const HsvSliders = (props) => {
           symbol={'H'}
           value={props.focusH}
           max={360}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHsvChange(event, 'H')}
         />
         <SliderContainer {...props}
           symbol={'S'}
           value={props.focusHsvS}
           max={100}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHsvChange(event, 'HsvS')}
         />
         <SliderContainer {...props}
           symbol={'V'}
           value={props.focusV}
           max={100}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHsvChange(event, 'V')}
         />
       </>}
@@ -280,21 +280,21 @@ const HslSliders = (props) => {
           symbol={'H'}
           value={props.focusH}
           max={360}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHslChange(event, 'H')}
         />
         <SliderContainer {...props}
           symbol={'S'}
           value={props.focusS}
           max={100}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHslChange(event, 'S')}
         />
         <SliderContainer {...props}
           symbol={'L'}
           value={props.focusL}
           max={100}
-          color={colors['K']}
+          color={systemColors['K']}
           onChange={(event) => props.onHslChange(event, 'L')}
         />
       </>}
@@ -351,7 +351,7 @@ function SliderContainer(props) {
             <div style={{
               marginLeft: "-4px",
               marginTop: "-3px",
-              color: isActive ? colors["INACTIVE"] : props.color
+              color: isActive ? systemColors["INACTIVE"] : props.color
             }}>
               ■
             </div> :
@@ -442,7 +442,7 @@ const StyledControlPane = styled.div`
 
     .labelOn{
       font-size:12px;
-      border: solid 2px ${colors["INACTIVE"]};
+      border: solid 2px ${systemColors["INACTIVE"]};
     }
     .labelOff{
       font-size:12px;

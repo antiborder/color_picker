@@ -1,4 +1,4 @@
-const colors={
+const systemColors={
     "R":'#FF0000',
     "G":'#00DD00',
     "B":'#0000FF',
@@ -12,4 +12,4 @@ const colors={
     "DEEP_GRAY":'#444444',
     "INACTIVE":'#999999',
 };
-export {colors};
+export {systemColors};
