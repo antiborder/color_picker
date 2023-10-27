@@ -216,7 +216,7 @@ const HsvSliders = (props) => {
         <ShapeButton {...props}
           setIsVisible={setIsVisible}
           shapeName={'HSV'}
-          content={'H:Hue(色相)\nS:Satulation(彩度)\nL:Value(輝度)'}
+          content={'H:Hue(色相)\nS:Satulation(彩度)\nV:Value(輝度)'}
         />
         <button
           className='showSlidersButton'

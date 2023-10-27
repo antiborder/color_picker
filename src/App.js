@@ -7,12 +7,15 @@ import ControlPane from './ControlPane'
 import Structure from './Structure'
 
 //表示タグをチェックボックスで選択
+//色名検索
+//2Dpickerをキャンバスに。ドラッグができるのが◯。
+//動作速度改善
+
 //色とshapeとmainElementの初期値はランダムで。
-//色bubbleのスタイル・フォント変更
 //ファビコン
 //色名で検索できるように
 //フレックス対応と全体のサイズ
-//2Dpickerをキャンバスに。ドラッグができるのが◯。
+
 //座標軸
 //カラーコードをコピー
 //色の明るさ調整
