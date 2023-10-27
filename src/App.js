@@ -6,12 +6,12 @@ import './App.css';
 import ControlPane from './ControlPane'
 import Structure from './Structure'
 
-//github pages
-//focusPlaneはon offできるように
 //輪郭線を描画
 //表示タグをチェックボックスで選択
+//focusPlaneはon offできるように
 //色とshapeとmainElementの初期値はランダムで。
 //色bubbleのスタイル・フォント変更
+//ファビコン
 //色名で検索できるように
 //フレックス対応と全体のサイズ
 //2Dpickerをキャンバスに
