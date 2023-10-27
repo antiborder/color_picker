@@ -8,7 +8,7 @@ const Circle = (props) => {
         <Line
             points={points}
             color={props.color}
-            lineWidth={3}
+            lineWidth={props.lineWidth}
             position={props.position}
         />
     );

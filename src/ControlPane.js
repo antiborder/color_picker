@@ -109,7 +109,7 @@ const RgbSliders = (props) => {
           <ShapeButton {...props}
             setIsVisible={setIsVisible}
             shapeName={'RGB'}
-            content={'R:Red(赤)\nG:Green(緑)\nB:Blue(青)'}
+            content={'R:Red(赤)　\nG:Green(緑)\nB:Blue(青)'}
           />
           <button
             className='showSlidersButton'
@@ -418,13 +418,13 @@ const StyledControlPane = styled.div`
 
     .shapeBubble{
       position: relative;
-      top: -80px;
-      left: 40px;
-      width: 140px;
+      top: -90px;
+      left: 45px;
+      width: 180px;
       background: gray;
       color: white;
       border-radius: 12px 12px 12px 0px;
-      font-size: 12px;
+      font-size: 16px;
       padding: 4px 8px;
       text-align:left;
       z-index: 1;

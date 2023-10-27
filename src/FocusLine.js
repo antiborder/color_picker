@@ -9,7 +9,7 @@ const FocusLine = (props) => {
     const [rescaledH, rescaledS, rescaledL] = props.rescaleHsl(props.focusH, props.focusS, props.focusL)
     const rescaledHsvS = props.rescaleHsl(props.focusH, props.focusHsvS, props.focusV)[1]
     const rescaledV = props.rescaleHsl(props.focusH, props.focusHsvS, props.focusV)[2]
-    // console.log(props.cmykMainElement)
+    const lineWidth = 3
 
     return (
         <>
@@ -26,6 +26,7 @@ const FocusLine = (props) => {
                                     props.rgbMainElement === 'G'?'B':'G'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
 
@@ -40,6 +41,7 @@ const FocusLine = (props) => {
                                     props.rgbMainElement === 'B'?'R':'B'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
 
@@ -54,6 +56,7 @@ const FocusLine = (props) => {
                                     props.rgbMainElement === 'R'?'G':'R'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
 
@@ -72,6 +75,7 @@ const FocusLine = (props) => {
                                     props.cmykMainElement === 'M'?'Y':'M'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
                     {props.cmykMainElement !== 'M' && (
@@ -85,6 +89,7 @@ const FocusLine = (props) => {
                                     props.cmykMainElement === 'Y'?'C':'Y'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
                     {props.cmykMainElement !== 'Y' && (
@@ -98,6 +103,7 @@ const FocusLine = (props) => {
                                     props.cmykMainElement === 'C'?'M':'C'
                                 ]
                             }
+                            width={lineWidth}
                         />
                     )}
                 </>
@@ -111,6 +117,7 @@ const FocusLine = (props) => {
                             radius={rescaledS}
                             position={[0, 0, rescaledL]}
                             color={systemColors["W"]}
+                            lineWidth={lineWidth}
                         />
                     )}
 
@@ -129,6 +136,7 @@ const FocusLine = (props) => {
                                 )
                             ]}
                             color={systemColors['K']}
+                            width={lineWidth}
                         />
                     )}
 
@@ -147,6 +155,7 @@ const FocusLine = (props) => {
                                 )
                             ]}
                             color={systemColors["DEEP_GRAY"]}
+                            width={lineWidth}
                         />
                     )}
                 </>
@@ -158,6 +167,7 @@ const FocusLine = (props) => {
                             radius={rescaledHsvS}
                             position={[0, 0, rescaledV]}
                             color={systemColors["W"]}
+                            lineWidth={lineWidth}
                         />
                     )}
 
@@ -176,6 +186,7 @@ const FocusLine = (props) => {
                                 )
                             ]}
                             color={systemColors["K"]}
+                            width={lineWidth}
                         />
                     )}
 
@@ -195,6 +206,7 @@ const FocusLine = (props) => {
 
                             ]}
                             color={systemColors["DEEP_GRAY"]}
+                            width={lineWidth}
                         />
                     )}
                 </>

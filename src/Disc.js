@@ -8,7 +8,7 @@ const Disc = (props) => {
     // 白いマテリアルの作成
     const material = new THREE.MeshBasicMaterial({
       color: 0xffffff,
-      opacity: 0.4,
+      opacity: 0.3,
       transparent: true,
       side: THREE.DoubleSide
     });

@@ -9,6 +9,7 @@ import Focus from './Focus';
 import FocusPlane from './FocusPlane';
 import FocusLine from './FocusLine';
 import Particles from './Particles';
+import Wireframe from './Wireframe';
 
 
 const Structure = (props) => {
@@ -110,6 +111,17 @@ const Structure = (props) => {
                         cylinderHeight={cylinderHeight}
                     />
                     <FocusLine {...props}
+                        getRgbPosition={getRgbPosition}
+                        getHslPosition={getHslPosition}
+                        getHsvPosition={getHsvPosition}
+
+                        rescaleHsl={rescaleHsl}
+                        cylindricalToCartesian={cylindricalToCartesian}
+
+                        cylinderRadius={cylinderRadius}
+                        cylinderHeight={cylinderHeight}
+                    />
+                    <Wireframe {...props}
                         getRgbPosition={getRgbPosition}
                         getHslPosition={getHslPosition}
                         getHsvPosition={getHsvPosition}
