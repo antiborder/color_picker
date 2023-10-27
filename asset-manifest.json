@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/color_picker/static/css/main.2b37755e.css",
-    "main.js": "/color_picker/static/js/main.5cc9fb34.js",
+    "main.css": "/color_picker/static/css/main.0926e84a.css",
+    "main.js": "/color_picker/static/js/main.f79d8287.js",
     "static/js/787.05b7a068.chunk.js": "/color_picker/static/js/787.05b7a068.chunk.js",
+    "static/media/YujiBoku-Regular.ttf": "/color_picker/static/media/YujiBoku-Regular.2a28c6fdce6b8f64d626.ttf",
     "index.html": "/color_picker/index.html",
-    "main.2b37755e.css.map": "/color_picker/static/css/main.2b37755e.css.map",
-    "main.5cc9fb34.js.map": "/color_picker/static/js/main.5cc9fb34.js.map",
+    "main.0926e84a.css.map": "/color_picker/static/css/main.0926e84a.css.map",
+    "main.f79d8287.js.map": "/color_picker/static/js/main.f79d8287.js.map",
     "787.05b7a068.chunk.js.map": "/color_picker/static/js/787.05b7a068.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2b37755e.css",
-    "static/js/main.5cc9fb34.js"
+    "static/css/main.0926e84a.css",
+    "static/js/main.f79d8287.js"
   ]
 }
