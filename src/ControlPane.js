@@ -418,8 +418,8 @@ const StyledControlPane = styled.div`
 
     .shapeBubble{
       position: relative;
-      top: -90px;
-      left: 45px;
+      top: -100px;
+      left: 48px;
       width: 180px;
       background: gray;
       color: white;

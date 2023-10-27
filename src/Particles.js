@@ -62,6 +62,7 @@ const Particles = (props) => {
                     shape={props.shape}
                     emissive={new THREE.Color('#000000')}
                     division={division}
+                    tags={c.tag}
                 />
             })}
         </>
@@ -150,16 +151,24 @@ const ParticleBubble = (props) => {
 
     return (
         <StyledNodeBubble style={{}}>
-            <div style={{ textAlign: 'left', fontWeight:'bold' }}>
+            <div className='name1' 
+            style={{
+                fontSize:props.tags[0]==='JAPANESE'?'24px' : '16px',
+                fontFamily:props.tags[0]==='JAPANESE'?'YujiBoku' : 'sans-serif'
+                }}>
             {props.name1}
+            </div>
+            <div className='name2'>
+            {props.name2}
             </div>
             <div
                 className='colorRectangle'
                 onClick={props.onParticleClick}
                 style={{ backgroundColor: "#" + convert.rgb.hex(props.r, props.g, props.b) }}
             />
+            <div className='hex'>
             {"#" + convert.rgb.hex(props.r, props.g, props.b)}<br/>
-            {props.name2}
+            </div>
             <div onClick={props.onParticleClick}>
                 <span className='modalLink'>
                     この色を選ぶ
@@ -173,12 +182,23 @@ const StyledNodeBubble = styled.div`
     position:absolute;
     top:4px;
     left:4px;
-    width: 120px;
+    width: 160px;
     background: #fff;
     border-radius: 0px 24px 24px 24px;
+    border: 1px solid #BBB;
     font-size: 12px;
     padding: 4px;
     text-align:center;
+    .name1{
+        font-family: 'YujiBoku', sans-serif;
+    }
+    .name2{
+        font-size:12px;
+    }
+    .hex{
+        font-size:12px;
+        color:#888;
+    }
     .modalLink{
         color:#0000FF;
         cursor: pointer;
@@ -193,6 +213,7 @@ const StyledNodeBubble = styled.div`
         width: 90px;
         border: 1px solid #BBB;
         cursor: pointer;
+        margin-top: 8px;
     }
 
 `;

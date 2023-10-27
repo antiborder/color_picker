@@ -53,3 +53,8 @@ a:hover {
   color: #fff;
   background: #000;
 }
+
+@font-face {
+  font-family: 'YujiBoku'; /* フォント名 */
+  src: url('../src/assets/YujiBoku-Regular.ttf') format('truetype');
+}
